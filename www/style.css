@@ -1,0 +1,494 @@
+/* =========================================
+   DESIGN TOKENS — CAMP LAZLO / MIGHTY B!
+   ========================================= */
+:root {
+  --honey:    #FFB703;
+  --amber:    #FB8500;
+  --forest:   #2D6A4F;
+  --moss:     #52B788;
+  --sky:      #56CFE1;
+  --night:    #0D1B2A;
+  --dusk:     #2C1654;
+  --fire:     #FF4D00;
+  --fire2:    #FFAE00;
+  --wood:     #8B5E3C;
+  --bark:     #5C3A1E;
+  --cream:    #FFF8E7;
+  --parchment:#F5E6C8;
+  --outline:  #1A0A00;
+  --white:    #FFFFFF;
+  --leaf:     #74C69D;
+  --red:      #E63946;
+  --purple:   #6A0572;
+  --bee-stripe: #1A0A00;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; overflow-x: hidden;
+  font-family: 'Nunito', 'Tajawal', sans-serif;
+  background: var(--night);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='5' fill='%23FFB703' stroke='%231A0A00' stroke-width='2'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* =========================================
+   SCREENS
+   ========================================= */
+.screen { display: none; min-height: 100vh; position: relative; overflow: hidden; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* =========================================
+   CARTOON BASE STYLE
+   ========================================= */
+.toon-card {
+  background: var(--cream);
+  border: 3px solid var(--outline);
+  border-radius: 20px;
+  box-shadow: 5px 5px 0 var(--outline);
+  position: relative;
+}
+.toon-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 18px;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 8px,
+    rgba(255,183,3,0.04) 8px, rgba(255,183,3,0.04) 9px
+  );
+  pointer-events: none;
+}
+
+.toon-btn {
+  border: 3px solid var(--outline);
+  box-shadow: 4px 4px 0 var(--outline);
+  font-family: 'Fredoka One', 'Boogaloo', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  border-radius: 14px;
+  padding: 10px 22px;
+  letter-spacing: 0.5px;
+}
+.toon-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--outline);
+}
+
+.toon-btn-honey { background: var(--honey); color: var(--outline); }
+.toon-btn-honey:hover { background: var(--amber); }
+.toon-btn-fire { background: var(--fire); color: white; }
+.toon-btn-fire:hover { background: #cc3300; }
+.toon-btn-forest { background: var(--forest); color: white; }
+.toon-btn-forest:hover { background: #1d4a36; }
+.toon-btn-sky { background: var(--sky); color: var(--outline); }
+
+.toon-input {
+  width: 100%;
+  border: 3px solid var(--outline);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  background: var(--white);
+  box-shadow: 3px 3px 0 var(--outline);
+  outline: none;
+  transition: box-shadow 0.1s;
+}
+.toon-input:focus {
+  box-shadow: 5px 5px 0 var(--honey);
+  border-color: var(--honey);
+}
+
+/* =========================================
+   TYPOGRAPHY
+   ========================================= */
+.display-font { font-family: 'Fredoka One', 'Boogaloo', sans-serif; }
+.arabic-display { font-family: 'Tajawal', sans-serif; font-weight: 900; }
+
+/* =========================================
+   STAR FIELD
+   ========================================= */
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.2; transform: scale(0.8); }
+  to   { opacity: 1;   transform: scale(1.2); }
+}
+
+/* =========================================
+   FIREFLIES
+   ========================================= */
+.firefly {
+  position: absolute;
+  width: 6px; height: 6px;
+  background: #AEFF00;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 3px rgba(174,255,0,0.8);
+  animation: fireflyFloat 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fireflyFloat {
+  0%   { transform: translate(0,0);        opacity: 0; }
+  20%  { opacity: 1; }
+  50%  { transform: translate(var(--fx),var(--fy)); opacity: 0.8; }
+  80%  { opacity: 1; }
+  100% { transform: translate(var(--fx2),var(--fy2)); opacity: 0; }
+}
+
+/* =========================================
+   TREE SWAY
+   ========================================= */
+.tree-svg { transform-origin: bottom center; animation: treeSway 4s ease-in-out infinite alternate; }
+.tree-svg:nth-child(2) { animation-duration: 5s; animation-delay: -1s; }
+.tree-svg:nth-child(3) { animation-duration: 3.5s; animation-delay: -2s; }
+@keyframes treeSway {
+  from { transform: rotate(-2deg); }
+  to   { transform: rotate(2deg); }
+}
+
+/* =========================================
+   CAMPFIRE ANIMATION
+   ========================================= */
+.flame-1 { animation: flicker1 0.6s ease-in-out infinite alternate; transform-origin: bottom center; }
+.flame-2 { animation: flicker2 0.8s ease-in-out infinite alternate; transform-origin: bottom center; }
+.flame-3 { animation: flicker3 0.5s ease-in-out infinite alternate; transform-origin: bottom center; }
+@keyframes flicker1 { from {transform:scaleY(1) scaleX(1)} to {transform:scaleY(1.15) scaleX(0.9) translateY(-4px)} }
+@keyframes flicker2 { from {transform:scaleY(0.9) scaleX(1.1) rotate(-3deg)} to {transform:scaleY(1.2) scaleX(0.85) rotate(4deg)} }
+@keyframes flicker3 { from {transform:scaleY(1.1) scaleX(0.95) rotate(2deg)} to {transform:scaleY(0.85) scaleX(1.05) rotate(-5deg)} }
+.ember { animation: emberRise 2s ease-out infinite; }
+.ember:nth-child(2) { animation-delay: 0.4s; }
+.ember:nth-child(3) { animation-delay: 0.9s; }
+.ember:nth-child(4) { animation-delay: 1.4s; }
+@keyframes emberRise {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--ex,10px), -60px) scale(0.2); opacity: 0; }
+}
+
+/* =========================================
+   BEE ANIMATION
+   ========================================= */
+.bee-fly { animation: beeFly 3s ease-in-out infinite; }
+@keyframes beeFly {
+  0%   { transform: translate(0,0) rotate(-5deg); }
+  25%  { transform: translate(15px,-12px) rotate(5deg); }
+  50%  { transform: translate(30px,5px) rotate(-3deg); }
+  75%  { transform: translate(10px,15px) rotate(8deg); }
+  100% { transform: translate(0,0) rotate(-5deg); }
+}
+.bee-wing { animation: wingFlap 0.15s linear infinite; transform-origin: center bottom; }
+@keyframes wingFlap {
+  from { transform: scaleY(1) rotate(-5deg); }
+  to   { transform: scaleY(0.6) rotate(5deg); }
+}
+
+/* =========================================
+   MERIT BADGE CARDS
+   ========================================= */
+.badge-card {
+  position: relative;
+  background: var(--cream);
+  border: 4px solid var(--outline);
+  box-shadow: 5px 5px 0 var(--outline);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.badge-card:hover {
+  transform: translateY(-6px) rotate(-1deg);
+  box-shadow: 8px 10px 0 var(--outline);
+}
+.badge-card:active {
+  transform: translate(3px,3px);
+  box-shadow: 2px 2px 0 var(--outline);
+}
+.badge-ribbon {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 8px;
+}
+
+/* =========================================
+   PROGRESS BAR (ROPE STYLE)
+   ========================================= */
+.rope-track {
+  height: 16px; border-radius: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--wood) 0px, var(--wood) 8px,
+    var(--bark) 8px, var(--bark) 16px
+  );
+  border: 2px solid var(--outline);
+  box-shadow: 2px 2px 0 var(--outline);
+  overflow: hidden;
+}
+.rope-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, var(--honey), var(--amber));
+  border-left: 2px solid var(--outline);
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* =========================================
+   NAV BAR
+   ========================================= */
+.camp-nav {
+  background: var(--forest);
+  border-bottom: 4px solid var(--outline);
+  box-shadow: 0 4px 0 var(--outline);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+
+/* =========================================
+   WOODEN SIGN / PINNED NOTE
+   ========================================= */
+.wooden-sign {
+  background: linear-gradient(135deg, #A0622A, #8B5E3C, #6B4226);
+  border: 4px solid var(--outline);
+  border-radius: 12px;
+  box-shadow: 6px 6px 0 var(--outline);
+  position: relative;
+}
+.wooden-sign::after {
+  content: '';
+  position: absolute; inset: 4px;
+  border-radius: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent, transparent 20px,
+    rgba(0,0,0,0.05) 20px, rgba(0,0,0,0.05) 21px
+  );
+  pointer-events: none;
+}
+
+.pinned-note {
+  background: #FFFDE0;
+  border: 2px solid var(--outline);
+  border-radius: 4px 4px 8px 8px;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+  position: relative;
+}
+.pinned-note::before {
+  content: '📌';
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  font-size: 1.2rem; z-index: 2;
+}
+
+/* =========================================
+   CORK BOARD
+   ========================================= */
+.cork-board {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(180,130,70,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(150,100,50,0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #C8956C, #B5804D, #C8956C, #A0692A);
+  border: 4px solid var(--outline);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.2);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+/* =========================================
+   TABS (CAMP SIGN STYLE)
+   ========================================= */
+.camp-tab {
+  padding: 8px 18px;
+  border: 3px solid var(--outline);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  background: var(--parchment);
+  color: var(--outline);
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  box-shadow: 3px -3px 0 var(--outline);
+  margin-left: 2px;
+}
+.camp-tab.active { background: var(--honey); color: var(--outline); }
+.camp-tab:hover:not(.active) { background: var(--leaf); }
+
+/* =========================================
+   SKILL STARS
+   ========================================= */
+.star-btn { font-size: 1.5rem; cursor: pointer; transition: transform 0.1s; display: inline-block; }
+.star-btn:hover { transform: scale(1.4) rotate(15deg); }
+
+/* =========================================
+   WIN / CONFETTI
+   ========================================= */
+#winOverlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: radial-gradient(ellipse at center, #2C1654 0%, #0D1B2A 100%);
+  display: none; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+#winOverlay.show { display: flex; animation: winPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes winPop { from { opacity:0; transform:scale(0.5); } to { opacity:1; transform:scale(1); } }
+
+.confetti-piece {
+  position: absolute;
+  animation: confettiFall linear infinite;
+  pointer-events: none;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-120px) rotate(0deg); opacity:1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity:0; }
+}
+
+/* =========================================
+   MEMBER CARD
+   ========================================= */
+.member-card {
+  background: var(--parchment);
+  border: 3px solid var(--outline);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--outline);
+  padding: 14px;
+  display: flex; align-items: center; gap: 12px;
+  animation: slideIn 0.3s ease forwards;
+}
+@keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+
+.avatar-frame {
+  width: 54px; height: 54px;
+  border: 3px solid var(--outline);
+  border-radius: 50%;
+  background: var(--honey);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 3px 3px 0 var(--outline);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.avatar-frame img { width:100%;height:100%;object-fit:cover;border-radius:50%; }
+
+/* =========================================
+   XP TOAST
+   ========================================= */
+#xpToast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: var(--honey);
+  border: 3px solid var(--outline);
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.2rem;
+  box-shadow: 4px 4px 0 var(--outline);
+  z-index: 999;
+  display: none;
+}
+#xpToast.show {
+  display: block;
+  animation: toastPop 0.3s cubic-bezier(0.34,1.56,0.64,1), toastFade 0.4s 1.8s forwards;
+}
+@keyframes toastPop  { from { transform:translateX(-50%) scale(0.5); } to { transform:translateX(-50%) scale(1); } }
+@keyframes toastFade { from { opacity:1; } to { opacity:0; } }
+
+/* =========================================
+   PRIORITY BADGES
+   ========================================= */
+.prio-badge {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border: 2px solid var(--outline);
+  border-radius: 50px;
+  box-shadow: 2px 2px 0 var(--outline);
+  display: inline-block;
+}
+.prio-high   { background: #FF4D6D; color: white; }
+.prio-mid    { background: var(--honey); color: var(--outline); }
+.prio-low    { background: var(--moss); color: white; }
+
+/* =========================================
+   EXPLORER
+   ========================================= */
+.field-note {
+  background: #FFFDE0;
+  border: 3px solid var(--outline);
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 var(--outline);
+  padding: 14px;
+  position: relative;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+.field-note:hover {
+  transform: translateY(-4px) rotate(1deg);
+  box-shadow: 6px 8px 0 var(--outline);
+}
+.field-note::before {
+  content: '';
+  position: absolute; left: 30px; top: 0; bottom: 0;
+  width: 2px; background: rgba(255,150,150,0.5);
+}
+
+/* =========================================
+   GAME STEP CARDS
+   ========================================= */
+.step-card {
+  background: var(--white);
+  border: 3px solid var(--outline);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--outline);
+  padding: 14px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.2s;
+}
+.step-card.done {
+  background: #D1FAE5;
+  border-color: #059669;
+  box-shadow: 3px 3px 0 #059669;
+}
+.step-num {
+  width: 34px; height: 34px;
+  border: 3px solid var(--outline);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1rem;
+  background: var(--honey);
+  box-shadow: 2px 2px 0 var(--outline);
+  flex-shrink: 0;
+}
+.step-card.done .step-num { background: #059669; color: white; }
+
+/* =========================================
+   CLOUD FLOAT
+   ========================================= */
+.cloud-float { animation: cloudDrift 20s linear infinite; }
+.cloud-float:nth-child(2) { animation-duration: 28s; animation-delay: -8s; }
+.cloud-float:nth-child(3) { animation-duration: 35s; animation-delay: -15s; }
+@keyframes cloudDrift {
+  from { transform: translateX(110vw); }
+  to   { transform: translateX(-300px); }
+}
+
+/* =========================================
+   SPIN WHEEL
+   ========================================= */
+.drum-wrap {
+  position: relative; display: inline-block;
+}
+.drum-wrap::before {
+  content: '';
+  position: absolute; inset: -12px;
+  border-radius: 50%;
+  border: 6px solid var(--wood);
+  box-shadow: 0 0 0 4px var(--outline), inset 0 0 0 4px var(--outline);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--forest); }
+::-webkit-scrollbar-thumb { background: var(--honey); border: 2px solid var(--outline); border-radius: 4px; }

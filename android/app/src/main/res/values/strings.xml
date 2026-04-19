@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kashefa TN</string>
+    <string name="title_activity_main">Kashefa TN</string>
+    <string name="package_name">tn.kashefa.scout</string>
+    <string name="custom_url_scheme">tn.kashefa.scout</string>
+</resources>

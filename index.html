@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>كشّافة تونس | Camp Kashefa!</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- XP Toast -->
+<div id="xpToast">⭐ +0 XP!</div>
+
+<!-- ================================================ -->
+<!-- SCREEN 1: LOGIN — Night Camp Scene               -->
+<!-- ================================================ -->
+<div id="screen-login" class="screen active" style="background: linear-gradient(180deg, #0D1B2A 0%, #1B2838 60%, #2D1B00 100%);">
+
+  <!-- Stars -->
+  <div id="starField" style="position:absolute;inset:0;pointer-events:none"></div>
+
+  <!-- Moon -->
+  <svg style="position:absolute;top:30px;right:40px;pointer-events:none" width="70" height="70" viewBox="0 0 70 70">
+    <circle cx="35" cy="35" r="30" fill="#FFF8D6" stroke="#FFD700" stroke-width="3"/>
+    <circle cx="50" cy="22" r="20" fill="#1B2838"/>
+    <circle cx="22" cy="48" r="5" fill="rgba(0,0,0,0.15)"/>
+    <circle cx="42" cy="52" r="3" fill="rgba(0,0,0,0.12)"/>
+  </svg>
+
+  <!-- Clouds -->
+  <svg class="cloud-float" style="position:absolute;top:60px;pointer-events:none;opacity:0.15" width="140" height="60" viewBox="0 0 140 60">
+    <ellipse cx="70" cy="45" rx="60" ry="20" fill="white"/>
+    <ellipse cx="50" cy="35" rx="30" ry="22" fill="white"/>
+    <ellipse cx="90" cy="30" rx="35" ry="25" fill="white"/>
+    <ellipse cx="70" cy="20" rx="25" ry="20" fill="white"/>
+  </svg>
+  <svg class="cloud-float" style="position:absolute;top:100px;pointer-events:none;opacity:0.1" width="100" height="45" viewBox="0 0 100 45">
+    <ellipse cx="50" cy="35" rx="45" ry="15" fill="white"/>
+    <ellipse cx="35" cy="25" rx="22" ry="18" fill="white"/>
+    <ellipse cx="65" cy="22" rx="25" ry="18" fill="white"/>
+  </svg>
+  <svg class="cloud-float" style="position:absolute;top:140px;pointer-events:none;opacity:0.08" width="80" height="35" viewBox="0 0 80 35">
+    <ellipse cx="40" cy="28" rx="36" ry="12" fill="white"/>
+    <ellipse cx="30" cy="20" rx="18" ry="15" fill="white"/>
+    <ellipse cx="52" cy="17" rx="20" ry="16" fill="white"/>
+  </svg>
+
+  <!-- Fireflies -->
+  <div id="fireflies" style="position:absolute;inset:0;pointer-events:none"></div>
+
+  <!-- Trees left -->
+  <svg class="tree-svg" style="position:absolute;bottom:0;right:0;pointer-events:none" width="100" height="260" viewBox="0 0 100 260">
+    <polygon points="50,10 90,120 10,120" fill="#1d4a36" stroke="#0a2218" stroke-width="3"/>
+    <polygon points="50,50 95,180 5,180" fill="#2D6A4F" stroke="#0a2218" stroke-width="3"/>
+    <polygon points="50,100 95,240 5,240" fill="#52B788" stroke="#0a2218" stroke-width="3"/>
+    <rect x="42" y="238" width="16" height="22" fill="#6B4226" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+  <svg class="tree-svg" style="position:absolute;bottom:0;left:0;pointer-events:none" width="80" height="210" viewBox="0 0 80 210">
+    <polygon points="40,8 72,100 8,100" fill="#1d4a36" stroke="#0a2218" stroke-width="3"/>
+    <polygon points="40,40 76,145 4,145" fill="#2D6A4F" stroke="#0a2218" stroke-width="3"/>
+    <polygon points="40,85 76,195 4,195" fill="#52B788" stroke="#0a2218" stroke-width="3"/>
+    <rect x="33" y="193" width="14" height="17" fill="#6B4226" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+  <svg class="tree-svg" style="position:absolute;bottom:0;right:80px;pointer-events:none" width="60" height="160" viewBox="0 0 60 160">
+    <polygon points="30,6 54,75 6,75" fill="#2D6A4F" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="30,35 56,110 4,110" fill="#52B788" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="30,70 56,148 4,148" fill="#74C69D" stroke="#0a2218" stroke-width="2"/>
+    <rect x="24" y="146" width="12" height="14" fill="#6B4226" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+
+  <!-- Campfire at bottom -->
+  <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);pointer-events:none">
+    <svg width="120" height="90" viewBox="0 0 120 90">
+      <!-- Logs -->
+      <ellipse cx="60" cy="78" rx="40" ry="8" fill="#5C3A1E" stroke="#1A0A00" stroke-width="2"/>
+      <rect x="25" y="68" width="70" height="12" rx="6" fill="#8B5E3C" stroke="#1A0A00" stroke-width="2" transform="rotate(-15,60,74)"/>
+      <rect x="25" y="68" width="70" height="12" rx="6" fill="#6B4226" stroke="#1A0A00" stroke-width="2" transform="rotate(15,60,74)"/>
+      <!-- Ember glow -->
+      <ellipse cx="60" cy="72" rx="22" ry="6" fill="#FF6B00" opacity="0.6"/>
+      <!-- Flames -->
+      <g class="flame-3">
+        <path d="M42,72 Q38,50 50,35 Q52,60 56,65 Q45,55 42,72Z" fill="#FF4D00"/>
+      </g>
+      <g class="flame-1">
+        <path d="M60,72 Q55,40 60,15 Q65,40 70,72Z" fill="#FFAE00"/>
+        <path d="M60,72 Q58,45 62,28 Q64,50 68,65 Q62,58 60,72Z" fill="#FFD700"/>
+      </g>
+      <g class="flame-2">
+        <path d="M78,72 Q82,50 70,35 Q68,60 64,65 Q75,55 78,72Z" fill="#FF4D00"/>
+      </g>
+      <!-- Embers -->
+      <circle class="ember" style="--ex:-12px" cx="48" cy="65" r="2" fill="#FFD700"/>
+      <circle class="ember" style="--ex:15px" cx="68" cy="60" r="1.5" fill="#FF8C00"/>
+      <circle class="ember" style="--ex:-5px" cx="58" cy="58" r="2.5" fill="#FFD700"/>
+      <circle class="ember" style="--ex:8px" cx="72" cy="62" r="2" fill="#FF6B00"/>
+    </svg>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-1 flex flex-col items-center justify-center p-5 pb-24" style="z-index:10">
+
+    <!-- Flying Bee -->
+    <div class="bee-fly" style="margin-bottom:-10px;margin-right:-60px;align-self:flex-end">
+      <svg width="60" height="45" viewBox="0 0 60 45">
+        <!-- Wings -->
+        <ellipse class="bee-wing" cx="18" cy="12" rx="14" ry="9" fill="rgba(200,240,255,0.75)" stroke="#1A0A00" stroke-width="1.5"/>
+        <ellipse class="bee-wing" cx="18" cy="28" rx="12" ry="8" fill="rgba(200,240,255,0.65)" stroke="#1A0A00" stroke-width="1.5"/>
+        <!-- Body -->
+        <ellipse cx="36" cy="22" rx="18" ry="12" fill="#FFB703" stroke="#1A0A00" stroke-width="2"/>
+        <rect x="24" y="17" width="8" height="10" rx="2" fill="#1A0A00"/>
+        <rect x="36" y="15" width="8" height="14" rx="2" fill="#1A0A00"/>
+        <!-- Head -->
+        <circle cx="52" cy="20" r="9" fill="#FFB703" stroke="#1A0A00" stroke-width="2"/>
+        <circle cx="56" cy="17" r="2.5" fill="white" stroke="#1A0A00" stroke-width="1"/>
+        <circle cx="57" cy="17" r="1.2" fill="#1A0A00"/>
+        <!-- Antennae -->
+        <line x1="54" y1="12" x2="58" y2="4" stroke="#1A0A00" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="58" cy="4" r="2" fill="#1A0A00"/>
+        <line x1="50" y1="12" x2="52" y2="4" stroke="#1A0A00" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="52" cy="4" r="2" fill="#1A0A00"/>
+        <!-- Smile -->
+        <path d="M50,22 Q53,26 56,22" stroke="#1A0A00" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- Wooden sign title -->
+    <div class="wooden-sign p-5 mb-5 text-center" style="min-width:280px">
+      <div class="text-4xl mb-1">⚜️</div>
+      <h1 class="arabic-display text-white text-4xl" style="text-shadow:2px 2px 0 #1A0A00,4px 4px 0 rgba(0,0,0,0.4)">كشّافة تونس</h1>
+      <p class="display-font text-yellow-300 text-lg" style="text-shadow:1px 1px 0 #1A0A00">Camp Kashefa!</p>
+    </div>
+
+    <!-- Login card -->
+    <div class="toon-card p-6 w-full" style="max-width:340px">
+      <!-- Decorative scout badge top -->
+      <div class="text-center mb-4">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:var(--forest);border:3px solid var(--outline);border-radius:50px;padding:4px 16px;box-shadow:3px 3px 0 var(--outline)">
+          <span>🏕️</span>
+          <span class="display-font text-white text-sm">دخول القائد</span>
+          <span>🏕️</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <input id="loginEmail" class="toon-input" type="email" placeholder="leader@scouts.tn" dir="ltr"/>
+        <input id="loginPwd" class="toon-input" type="password" placeholder="كلمة المرور ••••••" />
+        <button class="toon-btn toon-btn-honey w-full py-3 text-lg arabic-display" onclick="doLogin()">
+          دخول المعسكر! 🏕️
+        </button>
+      </div>
+
+      <div id="loginError" class="hidden mt-3 text-center" style="font-family:Fredoka One;color:var(--red);font-size:1rem;background:#FFE0E0;border:2px solid var(--red);border-radius:10px;padding:6px">
+        ❌ بريد أو كلمة مرور خاطئة!
+      </div>
+
+      <!-- Demo box -->
+      <div style="margin-top:16px;padding-top:14px;border-top:3px dashed var(--outline)">
+        <p class="text-center" style="font-size:0.78rem;color:#888;margin-bottom:6px;font-family:Fredoka One">للعرض التجريبي</p>
+        <div style="background:#FFF8E7;border:2px dashed var(--wood);border-radius:10px;padding:8px;text-align:center;font-family:monospace;font-size:0.85rem">
+          leader@scouts.tn / scout123
+        </div>
+      </div>
+    </div>
+
+    <!-- Scout member entry -->
+    <div class="toon-card mt-4 p-4 w-full" style="max-width:340px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <p class="arabic-display" style="font-size:1rem;color:var(--outline)">أنت كشاف؟ 🧭</p>
+        <p style="font-size:0.8rem;color:#666">ادخل برمز العضوية</p>
+      </div>
+      <button class="toon-btn toon-btn-forest" onclick="showMemberLogin()">دخول</button>
+    </div>
+  </div>
+</div>
+
+<!-- Member ID Modal -->
+<div id="memberLoginModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div class="toon-card p-6 w-full" style="max-width:320px">
+    <p class="arabic-display text-xl mb-4" style="text-align:center">🪪 رمز العضوية</p>
+    <input id="memberIdInput" class="toon-input mb-4" placeholder="KSF-TN-0001" dir="ltr"/>
+    <div style="display:flex;gap:10px">
+      <button class="toon-btn toon-btn-honey flex-1" onclick="doMemberLogin()">دخول!</button>
+      <button class="toon-btn flex-1" style="background:var(--parchment)" onclick="hideMemberLogin()">إلغاء</button>
+    </div>
+    <div id="memberLoginError" class="hidden mt-2 text-center" style="color:var(--red);font-family:Fredoka One;font-size:0.95rem">رمز غير صحيح! حاول مرة أخرى</div>
+  </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- SCREEN 2: LEADER DASHBOARD                       -->
+<!-- ================================================ -->
+<div id="screen-leader" class="screen" style="background:linear-gradient(180deg, #87CEEB 0%, #B0E2FF 40%, #74C69D 100%)">
+
+  <!-- Floating clouds -->
+  <svg class="cloud-float" style="position:absolute;top:20px;pointer-events:none;opacity:0.7" width="160" height="65" viewBox="0 0 160 65">
+    <ellipse cx="80" cy="50" rx="70" ry="22" fill="white" stroke="#E0E0E0" stroke-width="1"/>
+    <ellipse cx="55" cy="38" rx="35" ry="26" fill="white"/>
+    <ellipse cx="100" cy="32" rx="40" ry="28" fill="white"/>
+    <ellipse cx="78" cy="20" rx="28" ry="22" fill="white"/>
+  </svg>
+  <svg class="cloud-float" style="position:absolute;top:50px;pointer-events:none;opacity:0.5" width="110" height="45" viewBox="0 0 110 45">
+    <ellipse cx="55" cy="36" rx="50" ry="16" fill="white"/>
+    <ellipse cx="40" cy="26" rx="24" ry="19" fill="white"/>
+    <ellipse cx="72" cy="22" rx="28" ry="20" fill="white"/>
+  </svg>
+
+  <!-- Trees at sides -->
+  <svg class="tree-svg" style="position:absolute;bottom:0;right:0;pointer-events:none;opacity:0.8" width="80" height="200" viewBox="0 0 80 200">
+    <polygon points="40,10 72,90 8,90" fill="#2D6A4F" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="40,45 76,140 4,140" fill="#52B788" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="40,90 76,188 4,188" fill="#74C69D" stroke="#1d4a36" stroke-width="2"/>
+    <rect x="33" y="186" width="14" height="14" fill="#8B5E3C" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+  <svg class="tree-svg" style="position:absolute;bottom:0;left:0;pointer-events:none;opacity:0.8" width="65" height="165" viewBox="0 0 65 165">
+    <polygon points="32,8 58,72 6,72" fill="#2D6A4F" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="32,38 60,112 4,112" fill="#52B788" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="32,76 60,154 4,154" fill="#74C69D" stroke="#1d4a36" stroke-width="2"/>
+    <rect x="26" y="152" width="12" height="13" fill="#8B5E3C" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+
+  <!-- NAV -->
+  <div class="camp-nav">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:40px;height:40px;background:var(--honey);border:3px solid var(--outline);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:2px 2px 0 var(--outline)">⚜️</div>
+      <div>
+        <p class="display-font text-white" style="font-size:0.95rem;line-height:1.1">القائد أحمد</p>
+        <p style="font-size:0.72rem;color:var(--leaf)">leader@scouts.tn</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="showScreen('screen-spin')" class="toon-btn toon-btn-honey" style="font-size:0.85rem;padding:6px 14px">🎯 الإختيار</button>
+      <button onclick="doLogout()" class="toon-btn" style="background:var(--red);color:white;padding:6px 12px;font-size:0.85rem">⏻</button>
+    </div>
+  </div>
+
+  <div style="flex:1;padding:16px;max-width:720px;margin:0 auto;width:100%">
+
+    <!-- Stats row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+      <div class="toon-card p-4 text-center">
+        <p class="display-font" style="font-size:2.2rem;color:var(--forest)" id="statTotal">0</p>
+        <div style="height:4px;background:var(--forest);border-radius:2px;margin:4px 0;border:1px solid var(--outline)"></div>
+        <p style="font-size:0.75rem;color:#666">إجمالي الأعضاء</p>
+      </div>
+      <div class="toon-card p-4 text-center">
+        <p class="display-font" style="font-size:2.2rem;color:var(--fire)" id="statActive">0</p>
+        <div style="height:4px;background:var(--fire);border-radius:2px;margin:4px 0;border:1px solid var(--outline)"></div>
+        <p style="font-size:0.75rem;color:#666">نشطون اليوم</p>
+      </div>
+      <div class="toon-card p-4 text-center">
+        <p class="display-font" style="font-size:2.2rem;color:var(--honey)" id="statGames">0</p>
+        <div style="height:4px;background:var(--honey);border-radius:2px;margin:4px 0;border:1px solid var(--outline)"></div>
+        <p style="font-size:0.75rem;color:#666">ألعاب مكتملة</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:2px;margin-bottom:-3px;position:relative;z-index:1">
+      <button class="camp-tab active" onclick="leaderTab(this,'tab-members')">👥 الأعضاء</button>
+      <button class="camp-tab" onclick="leaderTab(this,'tab-add')">➕ إضافة</button>
+      <button class="camp-tab" onclick="leaderTab(this,'tab-tasks')">🎮 الأولويات</button>
+    </div>
+    <div style="background:var(--parchment);border:3px solid var(--outline);border-radius:0 16px 16px 16px;box-shadow:5px 5px 0 var(--outline);padding:16px;min-height:300px">
+
+      <!-- Members -->
+      <div id="tab-members" class="leader-tab">
+        <div id="membersList" style="display:flex;flex-direction:column;gap:10px"></div>
+        <div id="noMembers" class="hidden text-center" style="padding:40px 0;color:#888">
+          <svg width="80" height="80" viewBox="0 0 80 80" style="margin:0 auto 12px">
+            <circle cx="40" cy="40" r="35" fill="#F5E6C8" stroke="#8B5E3C" stroke-width="3"/>
+            <text x="40" y="52" text-anchor="middle" font-size="30">👥</text>
+          </svg>
+          <p class="display-font" style="font-size:1rem">لا يوجد أعضاء بعد!</p>
+          <p style="font-size:0.8rem">أضف أول كشاف من تبويب ➕</p>
+        </div>
+      </div>
+
+      <!-- Add Member -->
+      <div id="tab-add" class="leader-tab hidden">
+        <!-- Photo upload -->
+        <div class="text-center mb-5">
+          <div id="photoPreview" onclick="capturePhotoNative()"
+               style="width:80px;height:80px;margin:0 auto 8px;border:3px solid var(--outline);border-radius:50%;background:var(--honey);display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:4px 4px 0 var(--outline);cursor:pointer;animation:treeSway 2s ease-in-out infinite alternate">
+            📸
+          </div>
+          <input type="file" id="photoInput" accept="image/*" class="hidden" onchange="previewPhoto(this)"/>
+          <p style="font-size:0.75rem;color:#888">انقر لالتقاط صورة أو اختيار من المعرض</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div>
+            <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:4px">الاسم 🏷️</label>
+            <input id="addName" class="toon-input" placeholder="محمد"/>
+          </div>
+          <div>
+            <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:4px">اللقب 🏷️</label>
+            <input id="addFamily" class="toon-input" placeholder="العلواني"/>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <div>
+            <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:4px">السن 🎂</label>
+            <input id="addAge" class="toon-input" type="number" min="8" max="18" placeholder="12"/>
+          </div>
+          <div>
+            <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:4px">الفوج 🏕️</label>
+            <input id="addSection" class="toon-input" placeholder="الفوج 3"/>
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:4px">الرتبة ⚜️</label>
+          <select id="addRank" class="toon-input">
+            <option value="شبل">🐻 شبل</option>
+            <option value="كشاف">⚜️ كشاف</option>
+            <option value="مرشد">🌟 مرشد</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px">
+          <label style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);display:block;margin-bottom:8px;text-align:center">تقييم المهارات ⭐</label>
+          <div id="skillRatingInput" style="display:flex;justify-content:center;gap:4px">
+            <span class="star-btn" onclick="setRating(1)">⭐</span>
+            <span class="star-btn" onclick="setRating(2)">⭐</span>
+            <span class="star-btn" onclick="setRating(3)">⭐</span>
+            <span class="star-btn" onclick="setRating(4)">⭐</span>
+            <span class="star-btn" onclick="setRating(5)">⭐</span>
+          </div>
+          <p style="text-align:center;font-size:0.8rem;color:#666;margin-top:4px">المختار: <span id="ratingDisplay" class="display-font" style="color:var(--amber)">3</span>/5</p>
+        </div>
+        <button class="toon-btn toon-btn-forest w-full py-3 arabic-display text-lg" onclick="addMember()">✅ إضافة الكشاف!</button>
+        <div id="addSuccess" class="hidden mt-3 text-center" style="font-family:Fredoka One;color:var(--forest);background:#D1FAE5;border:2px solid var(--forest);border-radius:10px;padding:8px">
+          🎉 تمت الإضافة بنجاح!
+        </div>
+      </div>
+
+      <!-- Priorities -->
+      <div id="tab-tasks" class="leader-tab hidden">
+        <div style="margin-bottom:8px">
+          <p style="font-family:Fredoka One;font-size:0.85rem;color:#666">رتّب الألعاب حسب الأهمية للجلسة:</p>
+        </div>
+        <div id="taskList" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- SCREEN 3: SPIN WHEEL — Dusk Camp Scene           -->
+<!-- ================================================ -->
+<div id="screen-spin" class="screen" style="background:linear-gradient(180deg,#2C1654 0%,#4A1942 40%,#6B2D0E 100%)">
+
+  <!-- Stars -->
+  <div id="spinStars" style="position:absolute;inset:0;pointer-events:none"></div>
+
+  <!-- Fireflies -->
+  <div id="spinFireflies" style="position:absolute;inset:0;pointer-events:none"></div>
+
+  <!-- Side trees -->
+  <svg class="tree-svg" style="position:absolute;bottom:0;right:0;pointer-events:none;opacity:0.6" width="90" height="240" viewBox="0 0 90 240">
+    <polygon points="45,10 82,110 8,110" fill="#1d4a36" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="45,55 86,165 4,165" fill="#2D6A4F" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="45,105 86,228 4,228" fill="#52B788" stroke="#0a2218" stroke-width="2"/>
+    <rect x="38" y="226" width="14" height="14" fill="#5C3A1E" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+  <svg class="tree-svg" style="position:absolute;bottom:0;left:0;pointer-events:none;opacity:0.6" width="70" height="190" viewBox="0 0 70 190">
+    <polygon points="35,8 62,86 8,86" fill="#1d4a36" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="35,42 64,130 6,130" fill="#2D6A4F" stroke="#0a2218" stroke-width="2"/>
+    <polygon points="35,84 64,178 6,178" fill="#52B788" stroke="#0a2218" stroke-width="2"/>
+    <rect x="29" y="176" width="12" height="14" fill="#5C3A1E" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+
+  <!-- NAV -->
+  <div class="camp-nav">
+    <button onclick="showScreen('screen-leader')" class="toon-btn" style="background:var(--parchment);font-size:0.85rem;padding:6px 14px">⟵ رجوع</button>
+    <p class="display-font text-white text-xl">🎯 اختيار الكشاف</p>
+    <div style="width:80px"></div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative;z-index:5">
+
+    <div class="toon-card p-5 w-full text-center" style="max-width:380px;margin-bottom:16px;background:rgba(255,248,231,0.97)">
+      <h2 class="arabic-display" style="font-size:1.5rem;margin-bottom:4px">من سيلعب الآن؟ 🎲</h2>
+      <p style="font-size:0.82rem;color:#888;margin-bottom:16px">سيتم اختيار الكشاف الأقل نشاطاً ومهارةً</p>
+
+      <!-- Drum wheel container -->
+      <div class="drum-wrap" style="margin-bottom:16px;display:inline-block">
+        <canvas id="spinCanvas" width="280" height="280" style="border-radius:50%;display:block"></canvas>
+        <!-- Pointer -->
+        <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:2rem;filter:drop-shadow(2px 2px 0 #1A0A00)">🔻</div>
+      </div>
+
+      <button id="spinBtn" class="toon-btn toon-btn-fire w-full py-3 arabic-display text-xl" onclick="doSpin()">
+        🎲 ابدأ الإختيار!
+      </button>
+
+      <div id="spinResult" class="hidden mt-4">
+        <div style="background:var(--honey);border:3px solid var(--outline);border-radius:14px;padding:12px;box-shadow:3px 3px 0 var(--outline)">
+          <p style="font-size:0.8rem;color:var(--outline);margin-bottom:2px">🏆 تم اختيار</p>
+          <p class="arabic-display" style="font-size:1.5rem;color:var(--outline)" id="spinResultName">—</p>
+          <p style="font-size:0.78rem;color:#666" id="spinResultId">—</p>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="toon-btn toon-btn-forest flex-1 py-2" onclick="sendToGame()">🎮 إبدأ اللعبة!</button>
+          <button class="toon-btn flex-1 py-2" style="background:var(--sky)" onclick="sendToExplore()">📚 استكشف</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Member list -->
+    <div style="width:100%;max-width:380px">
+      <p style="font-family:Fredoka One;color:rgba(255,255,255,0.7);font-size:0.85rem;margin-bottom:8px;padding:0 4px">🏕️ الأعضاء في الجلسة:</p>
+      <div id="spinMembersList" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+  </div>
+
+  <!-- Campfire bottom decoration -->
+  <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);pointer-events:none;z-index:2">
+    <svg width="100" height="75" viewBox="0 0 100 75">
+      <ellipse cx="50" cy="65" rx="35" ry="7" fill="#5C3A1E" stroke="#1A0A00" stroke-width="2"/>
+      <rect x="22" y="56" width="56" height="10" rx="5" fill="#8B5E3C" stroke="#1A0A00" stroke-width="2" transform="rotate(-12,50,61)"/>
+      <rect x="22" y="56" width="56" height="10" rx="5" fill="#6B4226" stroke="#1A0A00" stroke-width="2" transform="rotate(12,50,61)"/>
+      <ellipse cx="50" cy="60" rx="18" ry="5" fill="#FF6B00" opacity="0.5"/>
+      <g class="flame-3"><path d="M36,60 Q32,44 42,30 Q44,50 47,55 Q38,47 36,60Z" fill="#FF4D00"/></g>
+      <g class="flame-1"><path d="M50,60 Q46,35 50,14 Q54,35 58,60Z" fill="#FFAE00"/><path d="M50,60 Q48,38 51,24 Q53,42 56,54Z" fill="#FFD700"/></g>
+      <g class="flame-2"><path d="M64,60 Q68,44 58,30 Q56,50 53,55 Q62,47 64,60Z" fill="#FF4D00"/></g>
+      <circle class="ember" style="--ex:-10px" cx="42" cy="54" r="1.5" fill="#FFD700"/>
+      <circle class="ember" style="--ex:12px" cx="56" cy="50" r="1.5" fill="#FF8C00"/>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- SCREEN 4: GAMES HUB                              -->
+<!-- ================================================ -->
+<div id="screen-games" class="screen" style="background:linear-gradient(180deg,#87CEEB 0%,#B8F5C8 100%)">
+
+  <!-- Clouds -->
+  <svg class="cloud-float" style="position:absolute;top:70px;pointer-events:none;opacity:0.6" width="120" height="50" viewBox="0 0 120 50">
+    <ellipse cx="60" cy="38" rx="52" ry="16" fill="white"/>
+    <ellipse cx="42" cy="28" rx="26" ry="20" fill="white"/>
+    <ellipse cx="78" cy="24" rx="30" ry="22" fill="white"/>
+  </svg>
+
+  <!-- Trees -->
+  <svg class="tree-svg" style="position:absolute;bottom:0;right:0;pointer-events:none;opacity:0.5" width="65" height="160" viewBox="0 0 65 160">
+    <polygon points="32,8 58,72 6,72" fill="#2D6A4F" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="32,38 60,112 4,112" fill="#52B788" stroke="#1d4a36" stroke-width="2"/>
+    <polygon points="32,76 60,148 4,148" fill="#74C69D" stroke="#1d4a36" stroke-width="2"/>
+    <rect x="26" y="146" width="12" height="14" fill="#8B5E3C" stroke="#1A0A00" stroke-width="2"/>
+  </svg>
+
+  <!-- NAV -->
+  <!-- NAV (مع زر الوصول السريع إلى المكتبة) -->
+<div class="camp-nav" style="background:var(--forest)">
+  <div style="display:flex; align-items:center; gap:10px;">
+    <!-- زر العودة -->
+    <button onclick="showScreen('screen-spin')" 
+            style="color:rgba(255,255,255,0.7);background:none;border:none;font-family:Fredoka One;font-size:1rem;cursor:pointer">⟵</button>
+    
+    <!-- زر الوصول السريع إلى الويكي والمعرفة -->
+    <button onclick="showScreen('screen-explore')" 
+            class="toon-btn toon-btn-honey" 
+            style="font-size:0.88rem; padding:6px 16px; border-radius:50px; box-shadow:3px 3px 0 var(--outline);">
+      📚 مكتبة الكشاف
+    </button>
+  </div>
+  
+  <div class="text-center">
+    <p class="display-font text-white" style="font-size:1rem">مرحباً يا <span id="activeScoutName">كشاف</span>! 🏕️</p>
+    <p style="font-size:0.7rem;color:var(--leaf)" id="activeScoutId">—</p>
+  </div>
+  
+  <div style="background:var(--honey);border:2px solid var(--outline);border-radius:50px;padding:4px 10px;font-family:Fredoka One;font-size:0.85rem;box-shadow:2px 2px 0 var(--outline)" id="xpBadge">XP: 0</div>
+</div>
+
+  <div style="flex:1;padding:16px;max-width:600px;margin:0 auto;width:100%;position:relative;z-index:5">
+
+    <div id="gameHub">
+      <!-- XP bar -->
+      <div class="toon-card p-4 mb-5" style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:2rem">🏆</div>
+        <div style="flex:1">
+          <p style="font-family:Fredoka One;font-size:0.85rem;color:var(--outline);margin-bottom:4px">تقدمك في المعسكر</p>
+          <div class="rope-track">
+            <div class="rope-fill" id="xpBar" style="width:0%"></div>
+          </div>
+          <p style="font-size:0.75rem;color:#666;margin-top:4px"><span id="xpText">0</span> نقطة خبرة</p>
+        </div>
+      </div>
+
+      <h2 class="arabic-display text-center" style="font-size:1.6rem;color:var(--outline);margin-bottom:16px">🎮 اختر لعبتك</h2>
+
+      <div id="gamesGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+    </div>
+
+    <!-- In-game area -->
+    <div id="gameContent" class="hidden">
+      <button onclick="backToHub()" style="display:flex;align-items:center;gap:6px;font-family:Fredoka One;color:var(--forest);background:none;border:none;font-size:1rem;cursor:pointer;margin-bottom:14px">
+        ⟵ العودة للألعاب
+      </button>
+      <div id="gameInner"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- SCREEN 5: EXPLORER                               -->
+<!-- ================================================ -->
+<div id="screen-explore" class="screen" style="background:linear-gradient(180deg,#F5E6C8 0%,#E8D5A8 100%)">
+
+  <!-- Decorative bugs -->
+  <svg style="position:absolute;top:80px;right:20px;pointer-events:none;animation:beeFly 4s ease-in-out infinite" width="30" height="25" viewBox="0 0 30 25">
+    <ellipse cx="15" cy="14" rx="9" ry="6" fill="#FFB703" stroke="#1A0A00" stroke-width="1.5"/>
+    <rect x="11" y="11" width="4" height="6" rx="1" fill="#1A0A00"/>
+    <rect x="17" y="10" width="4" height="8" rx="1" fill="#1A0A00"/>
+    <circle cx="25" cy="11" r="5" fill="#FFB703" stroke="#1A0A00" stroke-width="1.5"/>
+    <ellipse class="bee-wing" cx="8" cy="7" rx="7" ry="5" fill="rgba(200,240,255,0.7)" stroke="#1A0A00" stroke-width="1"/>
+  </svg>
+  <svg style="position:absolute;bottom:150px;left:15px;pointer-events:none;animation:beeFly 5s ease-in-out infinite 1s" width="22" height="18" viewBox="0 0 22 18">
+    <ellipse cx="11" cy="11" rx="7" ry="5" fill="#FF4D6D" stroke="#1A0A00" stroke-width="1.5"/>
+    <circle cx="11" cy="6" r="5" fill="#FF4D6D" stroke="#1A0A00" stroke-width="1.5"/>
+    <circle cx="10" cy="5" r="1.5" fill="white"/>
+    <circle cx="12" cy="5" r="1.5" fill="white"/>
+    <!-- Ladybug spots -->
+    <circle cx="9" cy="11" r="1.5" fill="#1A0A00"/>
+    <circle cx="13" cy="11" r="1.5" fill="#1A0A00"/>
+  </svg>
+
+  <div class="camp-nav">
+    <button onclick="showScreen('screen-spin')" style="color:rgba(255,255,255,0.7);background:none;border:none;font-family:Fredoka One;font-size:1rem;cursor:pointer">⟵</button>
+    <p class="display-font text-white text-xl">📚 مكتبة الكشاف</p>
+    <div style="width:40px"></div>
+  </div>
+
+  <div style="flex:1;padding:16px;max-width:600px;margin:0 auto;width:100%">
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:2px;margin-bottom:-3px;position:relative;z-index:1">
+      <button class="camp-tab active" onclick="explorerTab(this,'exp-wiki')">📖 ويكيبيديا</button>
+      <button class="camp-tab" onclick="explorerTab(this,'exp-geo')">🌍 جغرافيا</button>
+      <button class="camp-tab" onclick="explorerTab(this,'exp-nature')">🌿 طبيعة</button>
+      <button class="camp-tab" onclick="explorerTab(this,'exp-tips')">💡 نصائح ذكية</button>
+    </div>
+    <div style="background:#FFFDE0;border:3px solid var(--outline);border-radius:0 16px 16px 16px;box-shadow:5px 5px 0 var(--outline);padding:16px;min-height:400px">
+
+      <!-- Wikipedia -->
+      <div id="exp-wiki" class="explorer-section">
+        <div class="toon-card p-3 mb-4" style="display:flex;gap:8px">
+          <input id="wikiSearch" class="toon-input flex-1" placeholder="ابحث عن أي موضوع..." onkeypress="if(event.key==='Enter')searchWiki()"/>
+          <button class="toon-btn toon-btn-honey px-3" onclick="searchWiki()">🔍</button>
+        </div>
+        <!-- Quick chips -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+          <button class="toon-btn toon-btn-forest" style="font-size:0.8rem;padding:5px 12px" onclick="wikiQuick('الكشافة')">⚜️ الكشافة</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.8rem;padding:5px 12px" onclick="wikiQuick('تونس')">🇹🇳 تونس</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.8rem;padding:5px 12px" onclick="wikiQuick('النباتات')">🌿 نباتات</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.8rem;padding:5px 12px" onclick="wikiQuick('الحيوانات')">🦁 حيوانات</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.8rem;padding:5px 12px" onclick="wikiQuick('الإسعافات الأولية')">🏥 إسعاف</button>
+        </div>
+        <div id="wikiList" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+
+      <!-- Geography -->
+      <div id="exp-geo" class="explorer-section hidden">
+        <p class="display-font" style="font-size:1rem;color:var(--outline);margin-bottom:12px">🗺️ أطلس الجغرافيا:</p>
+        <div id="geoGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
+      </div>
+
+      <!-- Nature -->
+      <div id="exp-nature" class="explorer-section hidden">
+        <p class="display-font" style="font-size:1rem;color:var(--outline);margin-bottom:12px">🔬 عالم الطبيعة:</p>
+        <div id="natureGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
+      </div>
+
+      <!-- AI Tips -->
+      <div id="exp-tips" class="explorer-section hidden">
+        <p class="display-font" style="font-size:1rem;color:var(--outline);margin-bottom:12px">🤖 اسأل المدرب الذكي:</p>
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <input id="aiQuestion" class="toon-input flex-1" placeholder="اسأل عن أي شيء..." onkeypress="if(event.key==='Enter')askAI()"/>
+          <button class="toon-btn toon-btn-honey px-3" onclick="askAI()">💬</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px">
+          <button class="toon-btn toon-btn-forest" style="font-size:0.85rem;padding:8px" onclick="askAIQuestion('عقدة')">🪢 كيف أربط العقدة؟</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.85rem;padding:8px" onclick="askAIQuestion('إشارات')">🤟 ما معنى الإشارات؟</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.85rem;padding:8px" onclick="askAIQuestion('تحفيز')">💪 أنا تعبت</button>
+          <button class="toon-btn toon-btn-forest" style="font-size:0.85rem;padding:8px" onclick="askAIQuestion('قيادة')">👨‍✈️ كيف أكون قائداً؟</button>
+        </div>
+        <div id="aiResponse" class="toon-card" style="display:none;background:var(--cream);border:3px solid var(--forest);border-radius:12px;padding:14px;min-height:80px">
+          <p style="font-family:Tajawal;font-size:0.95rem;color:var(--outline);line-height:1.6" id="aiResponseText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- WIN OVERLAY                                       -->
+<!-- ================================================ -->
+<div id="winOverlay">
+  <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none" id="confettiContainer"></div>
+  <div style="text-align:center;padding:32px;position:relative;z-index:2">
+
+    <!-- Trophy SVG -->
+    <svg width="120" height="120" viewBox="0 0 120 120" style="margin:0 auto 16px;animation:winPop 0.6s 0.3s both cubic-bezier(0.34,1.56,0.64,1)">
+      <circle cx="60" cy="60" r="55" fill="#FFB703" stroke="#1A0A00" stroke-width="4"/>
+      <circle cx="60" cy="60" r="45" fill="#FFCC33" stroke="#1A0A00" stroke-width="2"/>
+      <!-- Trophy cup -->
+      <path d="M38,35 L82,35 L74,72 Q60,82 46,72 Z" fill="white" stroke="#1A0A00" stroke-width="3"/>
+      <path d="M38,35 Q28,35 28,50 Q28,62 38,62" fill="none" stroke="#1A0A00" stroke-width="3"/>
+      <path d="M82,35 Q92,35 92,50 Q92,62 82,62" fill="none" stroke="#1A0A00" stroke-width="3"/>
+      <rect x="52" y="78" width="16" height="12" fill="white" stroke="#1A0A00" stroke-width="2"/>
+      <rect x="44" y="88" width="32" height="6" rx="3" fill="white" stroke="#1A0A00" stroke-width="2"/>
+      <!-- Star on cup -->
+      <text x="60" y="63" text-anchor="middle" font-size="22" fill="#FFB703">★</text>
+    </svg>
+
+    <h1 class="arabic-display" style="font-size:3.5rem;color:var(--honey);text-shadow:3px 3px 0 var(--outline),6px 6px 0 rgba(0,0,0,0.3);margin-bottom:8px">
+      لقد فُزت! 🎉
+    </h1>
+    <p class="display-font" style="color:rgba(255,255,255,0.8);font-size:1.2rem;margin-bottom:20px">تم اختيارك للّعب!</p>
+
+    <div style="background:rgba(255,255,255,0.15);border:3px solid rgba(255,255,255,0.4);border-radius:20px;padding:16px 24px;margin-bottom:24px;backdrop-filter:blur(10px)">
+      <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-bottom:4px">الكشاف المختار</p>
+      <p class="arabic-display" style="font-size:2.2rem;color:white" id="winName">—</p>
+      <p style="color:rgba(255,200,100,0.9);font-size:0.85rem" id="winId">—</p>
+    </div>
+
+    <button class="toon-btn toon-btn-honey" style="font-size:1.3rem;padding:14px 40px;animation:treeSway 1s ease-in-out infinite alternate" onclick="closeWin()">
+      🎮 إبدأ اللعبة!
+    </button>
+  </div>
+</div>
+
+
+<script src="script.js" defer></script>
+</body>
+</html>

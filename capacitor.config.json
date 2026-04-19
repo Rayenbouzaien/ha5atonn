@@ -1,0 +1,14 @@
+{
+  "appId": "tn.kashefa.scout",
+  "appName": "Kashefa TN",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#0891B2"
+    }
+  }
+}
