@@ -410,5 +410,3 @@ Enjoy building Kashefa TN for mobile! 🏕️⚜️
 
 *Last updated: April 2026*
 *Capacitor version: 5.0.0*
-#   h a 5 a t o n  
- "# ha5atonn" 
