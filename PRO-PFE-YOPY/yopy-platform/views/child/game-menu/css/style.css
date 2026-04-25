@@ -1,0 +1,1308 @@
+:root {
+  --gold: #e8c96a;
+  --gold-light: #f5e19a;
+  --gold-dark: #a8852a;
+  --teal: #4ecdc4;
+  --teal-glow: rgba(78, 205, 196, 0.4);
+  --sky: #7fdbff;
+  --mario-red: #ff4757;
+  --mario-yellow: #ffd700;
+  --mario-blue: #2c82ff;
+  --palworld-green: #6bcb77;
+  --genshin-purple: #9b59b6;
+  --panel-bg: rgba(8, 12, 28, 0.88);
+  --card-border: rgba(232, 201, 106, 0.2);
+  --buddy-color: #e8c96a;
+  --buddy-rgb: 232, 201, 106;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: #050a18;
+  color: #fff;
+  cursor: default;
+}
+
+/* ═══ BACKGROUND LAYERS ═══ */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Sky gradient layers — Genshin-style */
+#bgLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 15% 5%,
+      rgba(120, 60, 220, 0.28) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 88% 10%,
+      rgba(50, 160, 255, 0.18) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 50% 100%,
+      rgba(78, 205, 196, 0.12) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 100% 50% at 50% 0%,
+      rgba(14, 22, 60, 0.95),
+      transparent 70%
+    ),
+    linear-gradient(180deg, #050a18 0%, #0a0f2a 40%, #060d22 100%);
+}
+
+/* Stars layer */
+#starsLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      circle 1px at 15% 20%,
+      rgba(255, 255, 255, 0.9) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 1.5px at 30% 8%,
+      rgba(255, 255, 200, 0.8) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 1px at 55% 15%,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 2px at 72% 5%,
+      rgba(255, 230, 150, 0.85) 0%,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle 1px at 85% 22%,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 1px at 8% 45%,
+      rgba(200, 200, 255, 0.7) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 1.5px at 92% 38%,
+      rgba(255, 255, 255, 0.8) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 1px at 40% 3%,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle 2px at 65% 28%,
+      rgba(255, 240, 180, 0.7) 0%,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle 1px at 20% 32%,
+      rgba(255, 255, 255, 0.5) 0%,
+      transparent 1px
+    );
+}
+
+/* Floating orbs — Genshin style */
+.float-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(60px);
+  opacity: 0.15;
+}
+.orb1 {
+  width: 300px;
+  height: 300px;
+  background: #7b2fbe;
+  top: -50px;
+  left: -80px;
+}
+.orb2 {
+  width: 200px;
+  height: 200px;
+  background: #2196f3;
+  top: 30px;
+  right: 10%;
+}
+.orb3 {
+  width: 250px;
+  height: 250px;
+  background: #4ecdc4;
+  bottom: -80px;
+  right: -60px;
+}
+.orb4 {
+  width: 180px;
+  height: 180px;
+  background: #ffd700;
+  bottom: 20%;
+  left: 22%;
+}
+
+/* Landscape silhouette — Genshin teyvat horizon */
+#horizon {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 180px;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(5, 10, 24, 0.95) 0%,
+    transparent 100%
+  );
+}
+#horizon svg {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+}
+
+/* Particle Canvas */
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ═══ TOPBAR ═══ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 10, 24, 0.95),
+    rgba(5, 10, 24, 0.7)
+  );
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(232, 201, 106, 0.18);
+}
+.topbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    var(--teal),
+    var(--gold),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+.tb-logo {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: 20px;
+  letter-spacing: 3px;
+  background: linear-gradient(
+    135deg,
+    var(--gold-light),
+    var(--gold),
+    var(--teal)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  position: relative;
+}
+.tb-logo::after {
+  content: "✦";
+  position: absolute;
+  top: -2px;
+  right: -18px;
+  font-size: 8px;
+  color: var(--teal);
+  -webkit-text-fill-color: var(--teal);
+  animation: sparkle-twirl 2s ease-in-out infinite;
+}
+@keyframes sparkle-twirl {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+  }
+}
+
+.tb-mid {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+.tb-buddy-mini {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 2px solid var(--gold);
+  box-shadow:
+    0 0 12px rgba(232, 201, 106, 0.5),
+    inset 0 0 8px rgba(232, 201, 106, 0.1);
+  background: rgba(232, 201, 106, 0.1);
+}
+.tb-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tb-score-pill {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 5px 16px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    rgba(232, 201, 106, 0.15),
+    rgba(232, 201, 106, 0.08)
+  );
+  border: 1.5px solid rgba(232, 201, 106, 0.3);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "Exo 2", sans-serif;
+}
+.tb-back {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 100px;
+  background: rgba(78, 205, 196, 0.08);
+  border: 1px solid rgba(78, 205, 196, 0.25);
+  color: var(--teal);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+  font-family: "Exo 2", sans-serif;
+  opacity: 1;
+}
+.tb-back:hover {
+  background: rgba(78, 205, 196, 0.18);
+  box-shadow: 0 0 12px var(--teal-glow);
+}
+
+/* ═══ MAIN LAYOUT ═══ */
+#main {
+  position: fixed;
+  top: 62px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* ═══ BUDDY PANEL ═══ */
+#buddyPanel {
+  width: 22%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(232, 201, 106, 0.1);
+}
+
+/* Genshin character panel bg */
+#buddyPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 20, 50, 0.9) 0%,
+    rgba(8, 12, 30, 0.95) 60%,
+    rgba(5, 8, 20, 0.98) 100%
+  );
+  z-index: 0;
+}
+
+/* decorative corners */
+#buddyPanel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold),
+    var(--teal),
+    var(--gold),
+    transparent
+  );
+  z-index: 10;
+}
+
+.panel-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  z-index: 10;
+  pointer-events: none;
+}
+.panel-corner.tl {
+  top: 8px;
+  left: 8px;
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+.panel-corner.tr {
+  top: 8px;
+  right: 8px;
+  border-top: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+.panel-corner.bl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+.panel-corner.br {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+#buddyBg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: background 1s ease;
+}
+#buddyOrb {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(60px);
+  opacity: 0;
+  transition: all 0.8s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.buddy-rank-badge {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 6px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.buddy-rank-badge::before,
+.buddy-rank-badge::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+}
+.buddy-rank-badge::after {
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.buddy-name {
+  position: relative;
+  z-index: 5;
+  font-family: "Cinzel", serif;
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.buddy-element {
+  position: relative;
+  z-index: 5;
+  font-family: "Exo 2", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  opacity: 0.8;
+}
+
+#buddyFaceWrap {
+  position: relative;
+  z-index: 5;
+  width: min(150px, 78%);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 10px 30px rgba(var(--buddy-rgb), 0.4));
+  animation: buddyFloat 3.5s ease-in-out infinite;
+}
+#buddyFaceWrap svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+@keyframes buddyFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+}
+
+/* Genshin-style speech bubble */
+.speech-bubble {
+  position: relative;
+  z-index: 5;
+  background: linear-gradient(
+    135deg,
+    rgba(232, 201, 106, 0.08),
+    rgba(78, 205, 196, 0.06)
+  );
+  border: 1px solid rgba(232, 201, 106, 0.2);
+  border-radius: 2px 12px 12px 12px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  max-width: 95%;
+  backdrop-filter: blur(10px);
+}
+.speech-bubble::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(232, 201, 106, 0.2);
+}
+.bubble-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  font-family: "Nunito", sans-serif;
+}
+
+/* Stats — Genshin attribute panel style */
+.buddy-stats {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  background: rgba(232, 201, 106, 0.05);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+}
+.stat-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.5px;
+  font-family: "Exo 2", sans-serif;
+}
+.stat-val {
+  font-family: "Cinzel", serif;
+  font-size: 15px;
+  color: var(--gold);
+}
+
+.change-btn {
+  position: relative;
+  z-index: 5;
+  margin-top: auto;
+  width: 100%;
+  font-family: "Exo 2", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 10px;
+  border-radius: 4px;
+  background: linear-gradient(
+    135deg,
+    rgba(78, 205, 196, 0.1),
+    rgba(78, 205, 196, 0.06)
+  );
+  border: 1px solid rgba(78, 205, 196, 0.25);
+  color: var(--teal);
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition:
+    background 0.25s,
+    box-shadow 0.25s,
+    color 0.25s;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 1;
+}
+.change-btn:hover {
+  background: rgba(78, 205, 196, 0.2);
+  box-shadow: 0 0 16px rgba(78, 205, 196, 0.3);
+}
+
+/* ═══ GAMES AREA ═══ */
+#gamesArea {
+  flex: 1;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Decorative top border */
+#gamesArea::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--gold) 30%,
+    var(--teal) 70%,
+    transparent
+  );
+  opacity: 0.3;
+}
+
+.games-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.games-title {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: clamp(20px, 2.2vw, 30px);
+  background: linear-gradient(
+    135deg,
+    var(--gold-light),
+    var(--gold),
+    var(--teal)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.games-title span {
+  display: block;
+  font-size: clamp(10px, 1vw, 12px);
+  font-family: "Exo 2", sans-serif;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Mario Party style star counter */
+.total-stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 7px 18px;
+  border-radius: 100px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.15),
+    rgba(255, 215, 0, 0.08)
+  );
+  border: 1.5px solid rgba(255, 215, 0, 0.3);
+  color: var(--mario-yellow);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.15);
+}
+.total-stars .star-icon {
+  animation: star-spin 4s linear infinite;
+  display: inline-block;
+}
+@keyframes star-spin {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  50% {
+    transform: rotate(15deg) scale(1.2);
+  }
+}
+
+/* ═══ CARDS GRID ═══ */
+#cardsGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: 30px;
+  padding-right: 8px;
+}
+#cardsGrid::-webkit-scrollbar {
+  width: 6px;
+}
+#cardsGrid::-webkit-scrollbar-track {
+  background: rgba(232, 201, 106, 0.05);
+  border-radius: 100px;
+}
+#cardsGrid::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--gold), var(--teal));
+  border-radius: 100px;
+}
+
+/* ── GAME CARD — Genshin/Palworld UI fusion ── */
+.game-card {
+  min-height: 300px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid rgba(232, 201, 106, 0.15);
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
+}
+.game-card:hover {
+  transform: translateY(-10px) scale(1.025);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 0 0 1px var(--gc, var(--gold)),
+    0 0 30px rgba(var(--gc-rgb, 232, 201, 106), 0.2);
+  border-color: var(--gc, var(--gold));
+}
+.game-card:hover .card-shine {
+  opacity: 1;
+  animation: shine-sweep 1.2s linear infinite;
+}
+.game-card:hover .play-btn {
+  transform: translateY(0);
+  opacity: 1;
+}
+.game-card:hover .card-icon-svg {
+  animation: iconHover 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes shine-sweep {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(210%);
+  }
+}
+@keyframes iconHover {
+  0% {
+    transform: translateY(0) scale(1) rotate(-4deg);
+  }
+  100% {
+    transform: translateY(-8px) scale(1.08) rotate(4deg);
+  }
+}
+@keyframes iconIdle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(2deg);
+  }
+}
+
+/* Card background */
+.card-bg-solid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--card-bg);
+}
+
+/* Pattern overlay */
+.card-pattern {
+  position: absolute;
+  inset: -10%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.18;
+  transition:
+    transform 0.5s ease,
+    opacity 0.4s ease;
+}
+.game-card:hover .card-pattern {
+  opacity: 0.3;
+  transform: scale(1.08) rotate(3deg);
+}
+
+/* Genshin-style rarity top bar */
+.card-rarity-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 6;
+  background: linear-gradient(90deg, var(--gc, var(--gold)), transparent);
+}
+
+/* Shine */
+.card-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Badge — Mario Party style pill */
+.card-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(232, 201, 106, 0.2);
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: "Exo 2", sans-serif;
+}
+.badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gc, var(--gold));
+  box-shadow: 0 0 6px var(--gc, var(--gold));
+}
+
+/* Stars */
+.card-stars {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  display: flex;
+  gap: 2px;
+  font-size: 12px;
+}
+
+/* Icon area */
+.card-icon-area {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 8px;
+  height:40%;
+}
+.card-icon-svg {
+  width: min(120px, 72%);
+  height: auto;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.45));
+  animation: iconIdle 4s ease-in-out infinite;
+}
+
+/* Card footer */
+.card-foot {
+  position: relative;
+  z-index: 3;
+  padding: 14px 18px 18px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  height: 90%;
+ 
+}
+
+/* Genshin-style divider */
+.card-divider {
+  height: 1px;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, var(--gc, var(--gold)), transparent);
+  opacity: 0.3;
+}
+
+.card-game-name {
+  font-family: "Cinzel", serif;
+  font-size: clamp(17px, 1.6vw, 22px);
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+.card-game-desc {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  font-family: "Nunito", sans-serif;
+}
+
+/* Palworld-style skill pills */
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.spill {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Exo 2", sans-serif;
+}
+
+/* Progress bar */
+.mini-prog {
+  height: 3px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.mini-prog-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(
+    90deg,
+    var(--gc-dark, #a8852a),
+    var(--gc, var(--gold))
+  );
+  width: 0%;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mario Party PLAY button */
+.play-btn {
+  width: 100%;
+  font-family: "Exo 2", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 11px;
+  text-transform: uppercase;
+  background: linear-gradient(
+    135deg,
+    var(--gc-dark, #a8852a),
+    var(--gc, var(--gold)),
+    var(--gc-dark, #a8852a)
+  );
+  background-size: 200% 100%;
+  background-position: 0% 0%;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(6px);
+  opacity: 0;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.5, 0.64, 1),
+    opacity 0.25s ease,
+    background-position 0.4s ease;
+}
+.play-btn:hover {
+  background-position: 100% 0%;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(var(--gc-rgb, 232, 201, 106), 0.3) !important;
+}
+
+/* ═══ PORTAL ═══ */
+#portal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  clip-path: circle(0% at 50% 50%);
+}
+
+/* ═══ BUDDY ANIMATIONS ═══ */
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.05);
+  }
+}
+.eb {
+  transform-origin: center;
+  animation: blink 4s ease-in-out infinite;
+}
+.eb2 {
+  animation-delay: -1.6s;
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.03);
+  }
+}
+.breathe {
+  transform-origin: 50% 80%;
+  animation: breathe 3s ease-in-out infinite;
+}
+@keyframes tremor {
+  0%,
+  100% {
+    transform: translate(-3px, -2px) rotate(-1deg);
+  }
+  50% {
+    transform: translate(3px, 2px) rotate(1deg);
+  }
+}
+
+/* ═══ DIVIDER ═══ */
+.vdiv {
+  width: 1px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(232, 201, 106, 0.25) 30%,
+    rgba(78, 205, 196, 0.25) 70%,
+    transparent
+  );
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1100px) {
+  #cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  #cardsGrid {
+    grid-template-columns: 1fr;
+  }
+  #main {
+    flex-direction: column;
+  }
+  #buddyPanel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(232, 201, 106, 0.1);
+  }
+}
+
+/* ═══ LOADING SCREEN ═══ */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #050a18;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.loader-logo {
+  font-family: "Cinzel Decorative", cursive;
+  font-size: 48px;
+  letter-spacing: 6px;
+  background: linear-gradient(
+    135deg,
+    var(--gold-light),
+    var(--gold),
+    var(--teal)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0;
+}
+.loader-bar-wrap {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.loader-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+}
+.loader-text {
+  font-family: "Exo 2", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+}
+.loader-stars {
+  position: absolute;
+  font-size: 24px;
+  pointer-events: none;
+  animation: loader-star-float 2s ease-in-out infinite alternate;
+}
+@keyframes loader-star-float {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    transform: translateY(-20px) rotate(360deg);
+  }
+}
+/* ═══ UPDATED MAIN LAYOUT ═══ */
+#main {
+  position: fixed;
+  top: 62px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 10;
+  overflow-y: auto; /* Allow scrolling for the entire main area on mobile */
+  overflow-x: hidden;
+}
+
+/* ═══ UPDATED BUDDY PANEL ═══ */
+/* ═══ UPDATED BUDDY PANEL ═══ */
+#buddyPanel {
+  width: 25%;
+  min-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  position: relative;
+  overflow-y: hidden; /* <-- Changed from hidden to auto */
+  overflow-x: hidden;
+  border-right: 1px solid rgba(232, 201, 106, 0.1);
+}
+
+/* ═══ UPDATED GAMES AREA ═══ */
+#gamesArea {
+  flex: 1;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0; /* Prevents flex items from overflowing */
+} /* ═══ ENHANCED RESPONSIVE ═══ */
+
+/* Tablets & Small Laptops */
+@media (max-width: 1100px) {
+  #cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  #buddyPanel {
+    width: 30%;
+  }
+}
+
+/* Mobile Devices (Phones) */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow: auto;
+  } /* Allow natural scrolling */
+
+  #main {
+    flex-direction: column;
+    position: relative; /* Change from fixed to allow scrolling */
+    top: 62px;
+    height: auto;
+  }
+
+  #buddyPanel {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(232, 201, 106, 0.2);
+    padding: 30px 20px;
+  }
+
+  /* Scale down the buddy for mobile to save space */
+  #buddyFaceWrap {
+    width: 120px;
+  }
+
+  .topbar {
+    padding: 0 15px;
+  }
+
+  .tb-mid {
+    display: none; /* Hide middle label on small screens to prevent overlap */
+  }
+
+  .tb-logo {
+    font-size: 18px;
+  }
+
+  #gamesArea {
+    padding: 20px 15px;
+  }
+
+  .games-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  #cardsGrid {
+    grid-template-columns: 1fr; /* Single column for cards */
+    padding-right: 0;
+    overflow: visible; /* Let the main container handle scrolling */
+  }
+
+  .game-card {
+    min-height: auto; /* Allow cards to height-adjust */
+  }
+
+  /* Hide the vertical divider on mobile */
+  .vdiv {
+    display: none;
+  }
+}
+
+/* Very Small Screens */
+@media (max-width: 400px) {
+  .tb-right {
+    gap: 5px;
+  }
+  .tb-back {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+  .tb-score-pill {
+    padding: 5px 10px;
+  }
+}

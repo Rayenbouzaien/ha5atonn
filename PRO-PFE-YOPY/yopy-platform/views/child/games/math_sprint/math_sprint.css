@@ -1,0 +1,473 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none; /* Kaiji immersion */
+}
+
+body {
+  background: #0b0d14;
+  font-family: "Inter", sans-serif;
+  color: #e8edff;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* --- 3B1B MATH BLUEPRINT BACKGROUND --- */
+.math-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(116, 192, 227, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(116, 192, 227, 0.12) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: driftGrid 90s linear infinite;
+}
+@keyframes driftGrid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 480px 480px;
+  }
+}
+.bg-symbols {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1600" opacity="0.2"><text x="40" y="100" font-family="monospace" font-size="28" fill="%23D4AF37">∫</text><text x="380" y="340" font-family="monospace" font-size="34" fill="%238CC043">∑</text><text x="620" y="720" font-family="monospace" font-size="42" fill="%2374C0E3">π</text><text x="120" y="950" font-family="monospace" font-size="30" fill="%23D4AF37">∞</text><text x="540" y="1280" font-family="monospace" font-size="36" fill="%238CC043">∇</text><text x="280" y="1520" font-family="monospace" font-size="40" fill="%23F9D71C">∂</text></svg>');
+  background-repeat: repeat;
+  background-size: 340px;
+  mix-blend-mode: overlay;
+  animation: floatSymbols 140s linear infinite;
+}
+@keyframes floatSymbols {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  100% {
+    transform: translateY(-200px) translateX(50px);
+  }
+}
+
+/* --- MAIN LAYER --- */
+.game-container {
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(2px);
+}
+
+/* TOPBAR — IMO GOLD PRESTIGE */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: rgba(8, 10, 18, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  font-family: "Fira Code", monospace;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: #d4af37;
+  text-transform: uppercase;
+}
+.hud-group {
+  display: flex;
+  gap: 32px;
+}
+.hud-pill {
+  font-family: "Fira Code", monospace;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 20px;
+  border-radius: 48px;
+  border-left: 3px solid #d4af37;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+.buddy-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.buddy-avatar {
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(circle, #2a2c3a, #0a0c14);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border: 1px solid #d4af37;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+.btn-exit {
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 6px 20px;
+  border-radius: 60px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  text-decoration: none;
+}
+.btn-exit:hover {
+  background: #d4af37;
+  color: #0b0d14;
+}
+
+/* --- DIFFICULTY SCREEN (UNDERGROUND TIERS) --- */
+#screen-difficulty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 90px);
+  text-align: center;
+  padding: 2rem;
+}
+.zawa-tag {
+  font-family: "Fira Code", monospace;
+  color: #ff3e3e;
+  letter-spacing: 6px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px #ff3e3e;
+}
+.hero-title {
+  font-family: "Crimson Pro", serif;
+  font-size: 4.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #d4af37, #74c0e3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -2px;
+}
+.difficulty-cards {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 56px 0 48px;
+}
+.diff-card {
+  width: 260px;
+  padding: 36px 20px;
+  background: rgba(20, 24, 38, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+.diff-card.selected {
+  border: 2px solid #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  box-shadow: 0 0 28px rgba(212, 175, 55, 0.3);
+  transform: translateY(-8px);
+}
+.diff-icon {
+  font-size: 52px;
+  margin-bottom: 18px;
+}
+.diff-name {
+  font-family: "Crimson Pro", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffe9b6;
+}
+.diff-stats {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 12px 0;
+}
+.multiplier-badge {
+  color: #d4af37;
+  font-family: "Fira Code";
+  font-weight: 600;
+}
+.best-time {
+  margin-top: 15px;
+  font-size: 0.75rem;
+}
+.best-time span {
+  color: #d4af37;
+  font-weight: bold;
+}
+.btn-commence {
+  background: transparent;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 800;
+  padding: 14px 60px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: 0.25s;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 4px;
+}
+.btn-commence:hover {
+  background: #d4af37;
+  color: #0b0d14;
+  transform: scale(1.02);
+}
+
+/* --- COUNTDOWN (GSAP THEATRICS) --- */
+#screen-countdown {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  flex-direction: column;
+}
+.countdown-number {
+  font-family: "Fira Code", monospace;
+  font-size: 140px;
+  font-weight: 800;
+  background: linear-gradient(45deg, #d4af37, #ffaa33);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- GAME ARENA: IMO FOCUS RING --- */
+#screen-game {
+  display: none;
+  flex-direction: column;
+  height: calc(100vh - 84px);
+}
+.progress-imo {
+  height: 4px;
+  background: #2a2e3f;
+  width: 100%;
+}
+.progress-fill {
+  height: 4px;
+  background: linear-gradient(90deg, #d4af37, #8cc043);
+  width: 0%;
+  transition: width 0.2s ease;
+}
+.equation-stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.equation-scroll {
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.equation-scroll::-webkit-scrollbar {
+  display: none;
+}
+.eq-spacer {
+  height: 40vh;
+  flex-shrink: 0;
+}
+.eq-item {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Crimson Pro", serif;
+  font-size: 3.2rem;
+  font-weight: 500;
+  color: rgba(255, 255, 240, 0.35);
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.eq-item.active {
+  color: #f9f6e0;
+  text-shadow:
+    0 0 20px #d4af37,
+    0 0 8px rgba(116, 192, 227, 0.6);
+  font-size: 3.8rem;
+  font-weight: 700;
+  transform: scale(1.02);
+}
+.focus-ring {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 130px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 3px solid #d4af37;
+  border-right: 3px solid #d4af37;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+  z-index: 5;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(212, 175, 55, 0.08) 0%,
+    transparent 80%
+  );
+}
+/* action buttons */
+.action-bar {
+  display: flex;
+  height: 100px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.judge-action {
+  flex: 1;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.07s linear;
+  background: #12141e;
+  letter-spacing: 6px;
+}
+.judge-false {
+  color: #ff4d4d;
+  border-top: 5px solid #ff4d4d;
+}
+.judge-true {
+  color: #8cc043;
+  border-top: 5px solid #8cc043;
+}
+.judge-action:active {
+  filter: brightness(1.2);
+  transform: scale(0.97);
+}
+
+/* --- ZAWA EFFECT CONTAINER --- */
+#zawa-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+.zawa-burst {
+  position: absolute;
+  font-family: "Fira Code", monospace;
+  font-weight: 900;
+  color: #ff3e3e;
+  text-shadow:
+    0 0 15px #ff0000,
+    0 0 30px rgba(255, 0, 0, 0.7);
+  white-space: nowrap;
+  font-size: 42px;
+}
+
+/* RESULT OVERLAY — MEDAL CEREMONY */
+#result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(24px);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+.medal-icon {
+  font-size: 90px;
+  filter: drop-shadow(0 0 18px gold);
+}
+.final-title {
+  font-family: "Crimson Pro", serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #d4af37;
+}
+.final-time-number {
+  font-family: "Fira Code";
+  font-size: 80px;
+  font-weight: 800;
+  color: #fff;
+}
+.penalty-line {
+  font-family: monospace;
+  font-size: 20px;
+  color: #ff7777;
+}
+.result-buttons {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+}
+.btn-rematch,
+.btn-return {
+  background: transparent;
+  border: 2px solid #d4af37;
+  padding: 12px 36px;
+  border-radius: 48px;
+  color: #d4af37;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 18px;
+}
+
+.submitting-badge {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #000000aa;
+  backdrop-filter: blur(8px);
+  padding: 8px 18px;
+  border-radius: 40px;
+  display: none;
+  z-index: 400;
+  font-family: monospace;
+}
+.player-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--neon-cyan);
+  background: linear-gradient(135deg, #1a2a4a, #0d1f3c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+  flex-shrink: 0;
+  translate: -35px -5px;
+}
+.zawa-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    pointer-events: none;
+    z-index: 9999;
+}

@@ -1,0 +1,443 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* smooth UI, but inputs remain selectable */
+        }
+
+        body {
+            font-family: 'Poppins', 'Orbitron', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #03050b);
+            overflow-x: hidden;
+            color: #e0eaff;
+            position: relative;
+        }
+
+        /* ===== MATRIX RAIN CANVAS (background) ===== */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.32;
+            filter: blur(0.4px);
+        }
+
+        /* ===== ANIME / HOYOLAB GLOW & GEOMETRIC OVERLAY ===== */
+        .anime-overlay {
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, rgba(255, 68, 204, 0.05) 0px, rgba(255, 68, 204, 0.05) 2px, transparent 2px, transparent 8px),
+                        repeating-linear-gradient(135deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 12px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* floating particles (No Game No Life sparkling) */
+        .floating-sparkle {
+            position: fixed;
+            background: radial-gradient(circle, #ff44cc, #ffaa44);
+            border-radius: 50%;
+            filter: blur(3px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatGlow 12s infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            100% { transform: translate(30px, -40px) scale(1.5); opacity: 0.5; }
+        }
+
+        /* ===== TOPBAR (HOYOLAB GLASS) ===== */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 28px;
+            background: rgba(5, 10, 20, 0.65);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5), 0 0 12px rgba(0, 255, 255, 0.2);
+        }
+        .topbar-logo {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.7rem;
+            background: linear-gradient(135deg, #ff44cc, #00e0ff, #aaff33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 6px #00ffff88;
+            letter-spacing: 2px;
+        }
+        .topbar-center {
+            display: flex;
+            gap: 20px;
+        }
+        .hud-pill {
+            background: rgba(0, 20, 30, 0.7);
+            border: 1px solid #0ff;
+            border-radius: 40px;
+            padding: 6px 18px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 800;
+            font-size: 1.2rem;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hud-pill span:first-child { font-size: 1rem; color: #0ff; text-shadow: 0 0 2px cyan; }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .buddy-avatar {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(145deg, #ff44cc, #aa22ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            box-shadow: 0 0 12px #ff44cc;
+            transition: all 0.3s ease;
+        }
+        .btn-back {
+            font-family: 'Orbitron', monospace;
+            background: transparent;
+            border: 1.5px solid #0ff;
+            color: #0ff;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
+            backdrop-filter: blur(5px);
+        }
+        .btn-back:hover {
+            background: #0ff;
+            color: #000;
+            box-shadow: 0 0 18px cyan;
+            transform: scale(0.96);
+        }
+
+        /* ===== DIFFICULTY SCREEN ===== */
+        #screen-difficulty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            position: relative;
+            z-index: 12;
+            gap: 32px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        #screen-difficulty h1 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #ff44cc, #ffcc44, #0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 18px magenta;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: #aaddff;
+            background: rgba(0,0,0,0.5);
+            padding: 6px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(5px);
+        }
+        .difficulty-cards {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .diff-card {
+            background: rgba(10, 20, 35, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 24px 22px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            transition: 0.25s;
+            min-width: 170px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .diff-card.selected {
+            border: 2px solid #ff44cc;
+            box-shadow: 0 0 28px #ff44cc, inset 0 0 8px #ff44cc;
+            background: rgba(255, 68, 204, 0.2);
+        }
+        .diff-icon { font-size: 3rem; filter: drop-shadow(0 0 5px cyan); }
+        .diff-name {
+            font-family: 'Orbitron', monospace;
+            font-weight: 800;
+            font-size: 1.7rem;
+            background: linear-gradient(145deg, #ffcc44, #0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .diff-badge {
+            margin-top: 12px;
+            background: #00aaff30;
+            border-radius: 60px;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #0ff;
+            display: inline-block;
+        }
+        .btn-start {
+            font-family: 'Press Start 2P', monospace;
+            background: linear-gradient(95deg, #ff44cc, #aa22ff);
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.4rem;
+            border-radius: 60px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 20px #ff44cc;
+            transition: 0.2s;
+        }
+        .btn-start:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 34px #ff66ee;
+        }
+
+        /* ===== GAME SCREEN (Neon Matrix Sudoku) ===== */
+        #screen-game {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 40px;
+            z-index: 12;
+            position: relative;
+            gap: 18px;
+        }
+        #error-badge {
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            background: #000000aa;
+            backdrop-filter: blur(8px);
+            padding: 8px 24px;
+            border-radius: 40px;
+            border-left: 4px solid #ff3366;
+            font-size: 1rem;
+        }
+        #sudoku-wrap {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 18px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 6px rgba(0,255,255,0.3);
+            border: 1px solid #0ff;
+        }
+        #sudoku-board {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            background: #03070f;
+            border: 2px solid #0ff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            border-right: 1px solid #2c6a8a;
+            border-bottom: 1px solid #2c6a8a;
+        }
+        .cell.box-right { border-right: 2.5px solid #0ff; }
+        .cell.box-bottom { border-bottom: 2.5px solid #0ff; }
+        .cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: #0b1018;
+            color: #0fefef;
+            transition: 0.12s linear;
+            cursor: text;
+        }
+        .cell input:focus {
+            background: #1a2538;
+            box-shadow: inset 0 0 0 2px cyan;
+            color: #fff;
+        }
+        .cell input[readonly] {
+            background: #0a0f1a;
+            color: #c0f0ff;
+            font-weight: 800;
+            text-shadow: 0 0 2px #0ff;
+        }
+        .cell input.error {
+            background: #ff336630;
+            color: #ff8899;
+            box-shadow: inset 0 0 0 1px #ff3366;
+        }
+        .cell input.tentative {
+            background: #ffaa3330;
+            color: #ffcc66;
+        }
+        .cell input.solved {
+            background: #44ffaa20;
+            color: #88ffcc;
+            text-shadow: 0 0 2px #0f0;
+        }
+        .game-controls {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .ctrl-btn {
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            border: none;
+            border-radius: 60px;
+            padding: 10px 28px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: rgba(0, 20, 35, 0.8);
+            backdrop-filter: blur(6px);
+            border: 1px solid cyan;
+            color: cyan;
+            transition: 0.2s;
+        }
+        .ctrl-btn.primary {
+            background: linear-gradient(115deg, #ff44cc, #aa22ff);
+            border: none;
+            color: white;
+            box-shadow: 0 0 12px #ff44aa;
+        }
+        .ctrl-btn.warning {
+            border-color: #ffaa44;
+            color: #ffaa44;
+        }
+        .ctrl-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.2);
+            box-shadow: 0 6px 16px rgba(0,255,255,0.3);
+        }
+        #hint-bubble {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            border-left: 5px solid #0ff;
+            border-radius: 20px;
+            padding: 14px 20px;
+            font-size: 0.85rem;
+            color: #ccf;
+            max-width: 380px;
+            font-family: 'Poppins', monospace;
+            box-shadow: 0 0 28px #0ff4;
+        }
+        .cell input.hint-highlight {
+            background: #aa44ff60 !important;
+            outline: 2px solid cyan;
+            animation: glitchPulse 0.8s infinite alternate;
+        }
+        @keyframes glitchPulse {
+            0% { box-shadow: 0 0 0 0 cyan; }
+            100% { box-shadow: 0 0 0 4px rgba(0,255,255,0.5); }
+        }
+        /* group-complete celebration */
+        .cell.group-complete input {
+            background: #44ffaa40 !important;
+            color: #ccffdd !important;
+            text-shadow: 0 0 4px #0f0;
+        }
+        .cell.group-complete::after {
+            content: '✓';
+            position: absolute;
+            top: 2px;
+            right: 3px;
+            font-size: 12px;
+            color: #0ff;
+            font-weight: bold;
+            opacity: 0;
+            animation: lockGlow 0.5s forwards;
+        }
+        @keyframes lockGlow {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        /* result overlay */
+        #result-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction: column;
+            gap: 20px;
+            border: 2px solid cyan;
+            box-shadow: inset 0 0 60px #0ff2;
+        }
+        #result-overlay.show {
+            display: flex;
+        }
+        .result-emoji { font-size: 80px; filter: drop-shadow(0 0 12px gold);}
+        .result-title { font-family: 'Press Start 2P', cursive; font-size: 2rem; color: #ff44cc; text-shadow: 0 0 8px #0ff; }
+        .result-score { font-size: 2rem; font-family: 'Orbitron'; color: #0ff; }
+        .result-btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .btn-play-again, .btn-menu-out {
+            font-family: 'Orbitron', monospace;
+            padding: 12px 34px;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #ff44cc, #8f44ff);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-menu-out { background: #222; border: 1px solid cyan; color: cyan; }
+        @media (max-width: 520px) {
+            .cell { width: 38px; height: 38px; }
+            .cell input { font-size: 1rem; }
+            .topbar-logo { font-size: 1.2rem; }
+            .hud-pill { font-size: 0.8rem; padding: 2px 12px; }
+        }
+        .submitting-badge {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: black;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-family: monospace;
+            border-left: 4px solid cyan;
+            z-index: 300;
+            display: none;
+        }
+        .submitting-badge.show {
+            display: block;
+        }

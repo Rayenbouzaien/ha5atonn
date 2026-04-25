@@ -1,0 +1,12 @@
+# Current requirements
+PHP >= 8.0
+MySQL >= 8.0
+Apache or Nginx
+Composer
+PHP extensions: mysqli, openssl, mbstring
+phpmailer/phpmailer ^7.0 (Composer)
+
+# Future requirements (add as needed)
+TBD: SMTP provider credentials
+TBD: Cache/queue service
+TBD: Background job runner

@@ -1,0 +1,18 @@
+{
+  "coverage-gutters.coverageFileNames": [
+    "coverage/lcov.info",
+    "coverage/coverage-final.json"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true
+  },
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "tests/rahma"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/views/parent/dashboard/unicef_indexation/python"
+  ]
+}

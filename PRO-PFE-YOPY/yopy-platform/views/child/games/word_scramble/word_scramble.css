@@ -1,0 +1,506 @@
+
+:root {
+    --gold:     #D4A017;
+    --gold-l:   #F5C842;
+    --gold-d:   #9A7010;
+    --sand:     #E8D5A3;
+    --sand-d:   #C4A96A;
+    --obsidian: #0D0A05;
+    --tomb:     #1A1208;
+    --stone:    #2C2010;
+    --hieroglyph:#3D2E10;
+    --blood:    #8B1A1A;
+    --turquoise:#2A8C7E;
+    --lapis:    #1F3A6E;
+    --crimson:  #C0392B;
+    --papyrus:  #F2E4C4;
+    --glow:     0 0 20px rgba(212,160,23,.6), 0 0 60px rgba(212,160,23,.2);
+    --glow-red: 0 0 20px rgba(192,57,43,.8), 0 0 60px rgba(192,57,43,.3);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; opacity: 1; }
+
+body {
+    font-family: 'Cinzel', serif;
+    background: var(--obsidian);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpolygon points='0,0 0,16 5,11 8,18 10,17 7,10 13,10' fill='%23D4A017' stroke='%23000' stroke-width='1'/%3E%3C/svg%3E") 0 0, auto;
+}
+
+/* ─── Sand-grain noise overlay ─── */
+body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+    opacity: .35;
+    mix-blend-mode: overlay;
+}
+
+/* ─── Animated torch background ─── */
+.torch-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+        radial-gradient(ellipse 40% 60% at 0% 50%, rgba(212,160,23,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 100% 50%, rgba(212,160,23,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 40% at 50% 100%, rgba(139,26,26,.15) 0%, transparent 50%),
+        linear-gradient(180deg, #0D0A05 0%, #1A1208 40%, #120D04 100%);
+    animation: torchFlicker 4s ease-in-out infinite alternate;
+}
+@keyframes torchFlicker {
+    0%   { opacity: 1; }
+    50%  { opacity: .92; }
+    100% { opacity: .98; }
+}
+
+/* ─── Hieroglyph border strips ─── */
+.hiero-strip {
+    position: fixed; top: 0; bottom: 0; width: 54px;
+    background: var(--hieroglyph);
+    border-right: 2px solid var(--gold-d);
+    z-index: 1; pointer-events: none;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: space-around; padding: 8px 0;
+    font-size: 22px; color: var(--gold-d); opacity: .6;
+    overflow: hidden;
+}
+.hiero-strip.right { left: auto; right: 0; border-right: none; border-left: 2px solid var(--gold-d); }
+.hiero-strip span { display: block; text-align: center; line-height: 1.6; animation: hieroDrift 8s linear infinite; }
+@keyframes hieroDrift { 0%{transform:translateY(0)} 100%{transform:translateY(-50%)} }
+
+/* ─── Topbar / HUD ─── */
+.topbar {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 72px;
+    background: linear-gradient(180deg, rgba(13,10,5,.98) 0%, rgba(26,18,8,.92) 100%);
+    border-bottom: 1px solid var(--gold-d);
+    box-shadow: 0 2px 30px rgba(0,0,0,.8), 0 1px 0 rgba(212,160,23,.3);
+}
+.topbar::after {
+    content: '𓂀 𓃭 𓅓 𓆣 𓀭 𓁺 𓂀 𓃭 𓅓 𓆣 𓀭 𓁺 𓂀 𓃭 𓅓 𓆣';
+    position: absolute; bottom: 0; left: 72px; right: 72px;
+    font-size: 9px; color: var(--gold-d); opacity: .4; letter-spacing: 4px;
+    text-align: center; transform: translateY(50%); white-space: nowrap; overflow: hidden;
+}
+
+.topbar-logo {
+    font-family: 'Cinzel Decorative', cursive; font-size: 18px; font-weight: 900;
+    color: var(--gold-l); text-shadow: var(--glow);
+    letter-spacing: 3px;
+}
+.topbar-logo small { display: block; font-size: 8px; font-weight: 400; color: var(--sand-d); letter-spacing: 6px; margin-top: -2px; }
+
+.hud-center { display: flex; gap: 14px; }
+.hud-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(212,160,23,.08); border: 1px solid rgba(212,160,23,.3);
+    border-radius: 4px; padding: 6px 18px;
+    font-family: 'Cinzel', serif; font-size: 15px; color: var(--gold-l);
+    text-shadow: 0 0 10px rgba(212,160,23,.5);
+}
+.hud-pill label { font-size: 9px; color: var(--sand-d); letter-spacing: 2px; display: block; margin-bottom: 1px; }
+.hud-pill.danger { border-color: rgba(192,57,43,.6); color: #FF6B6B; animation: dangerPulse .6s ease infinite alternate; }
+@keyframes dangerPulse { from{box-shadow:0 0 10px rgba(192,57,43,.3)} to{box-shadow:0 0 30px rgba(192,57,43,.7)} }
+
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.explorer-name { font-size: 11px; color: var(--sand-d); letter-spacing: 1px; }
+.pharaoh-seal {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: radial-gradient(circle, var(--gold) 0%, var(--gold-d) 100%);
+    border: 2px solid var(--gold-l); display: flex; align-items: center; justify-content: center;
+    font-size: 20px; box-shadow: var(--glow);
+    animation: sealSpin 6s linear infinite;
+}
+@keyframes sealSpin { 0%,100%{box-shadow:0 0 20px rgba(212,160,23,.5)} 50%{box-shadow:0 0 40px rgba(212,160,23,.9)} }
+
+.btn-back {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+    background: transparent; color: var(--sand-d); border: 1px solid var(--gold-d);
+    border-radius: 2px; padding: 7px 18px; cursor: pointer; text-decoration: none;
+    transition: all .25s; text-transform: uppercase;
+}
+.btn-back:hover { background: rgba(212,160,23,.1); color: var(--gold-l); }
+
+/* ─── Main content wrapper ─── */
+.content { position: relative; z-index: 10; padding: 0 72px; }
+#screen-difficulty, #screen-game { position: relative; z-index: 11; }
+
+/* ══════════════════════════════════════════════════
+   DIFFICULTY SCREEN
+══════════════════════════════════════════════════ */
+#screen-difficulty {
+    min-height: calc(100vh - 70px);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 32px; padding: 40px 20px;
+}
+
+.tomb-title {
+    text-align: center;
+}
+.tomb-title h1 {
+    font-family: 'Cinzel Decorative', cursive; font-size: clamp(28px, 5vw, 52px); font-weight: 900;
+    color: var(--gold-l); text-shadow: var(--glow);
+    line-height: 1.1; letter-spacing: 2px;
+}
+.tomb-title h1 em { display: block; font-style: normal; font-size: .55em; color: var(--sand-d); font-weight: 400; letter-spacing: 6px; margin-bottom: 8px; }
+.tomb-title p {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: 15px; color: var(--sand-d); margin-top: 12px; max-width: 500px;
+    line-height: 1.8;
+}
+
+/* Eye of Ra divider */
+.divider {
+    display: flex; align-items: center; gap: 16px; width: 100%; max-width: 500px;
+    color: var(--gold-d); font-size: 12px; letter-spacing: 3px;
+}
+.divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-d), transparent);
+}
+
+/* Difficulty cards */
+.difficulty-cards {
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 2;
+}
+
+.diff-card {
+    position: relative; background: var(--tomb);
+    border: 1px solid var(--gold-d); border-radius: 4px;
+    padding: 28px 22px; text-align: center; min-width: 160px;
+    cursor: pointer; overflow: hidden; transition: all .3s;
+    opacity: 1; z-index: 2;
+}
+.diff-card { box-shadow: 0 10px 28px rgba(0,0,0,.55); background: rgba(26,18,8,.96); outline: 1px solid rgba(245,200,66,.2); }
+.diff-card .diff-name { color: #FFE39C; text-shadow: 0 0 12px rgba(212,160,23,.75); }
+.diff-card .diff-info { color: #F0DEB0; text-shadow: 0 0 10px rgba(0,0,0,.6); }
+.diff-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(212,160,23,.05) 0%, transparent 60%);
+    opacity: 0; transition: opacity .3s;
+}
+.diff-card::after {
+    content: attr(data-glyph);
+    position: absolute; bottom: -10px; right: -5px;
+    font-size: 60px; opacity: .04; color: var(--gold);
+    pointer-events: none;
+}
+.diff-card:hover { border-color: var(--gold-l); transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,.6), var(--glow); }
+.diff-card:hover::before { opacity: 1; }
+.diff-card.selected { border-color: var(--gold-l); background: rgba(212,160,23,.08); box-shadow: var(--glow); }
+
+.diff-icon { font-size: 36px; margin-bottom: 10px; display: block; }
+.diff-name { font-family: 'Cinzel Decorative', cursive; font-size: 16px; color: var(--gold-l); margin-bottom: 6px; }
+.diff-info { font-family: 'IM Fell English', serif; font-style: italic; font-size: 12px; color: var(--sand-d); line-height: 1.7; }
+.diff-badge {
+    display: inline-block; margin-top: 10px; padding: 3px 12px;
+    border: 1px solid var(--gold-d); border-radius: 2px;
+    font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase;
+}
+
+.btn-start {
+    position: relative; overflow: hidden;
+    font-family: 'Cinzel Decorative', cursive; font-size: 18px; font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-d), var(--gold), var(--gold-d));
+    color: var(--obsidian); border: none; border-radius: 3px;
+    padding: 16px 60px; cursor: pointer; letter-spacing: 3px;
+    box-shadow: 0 0 0 1px var(--gold-l), var(--glow);
+    transition: all .25s; text-transform: uppercase;
+}
+.btn-start::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.2) 50%, transparent 100%);
+    transform: translateX(-100%); transition: transform .5s;
+}
+.btn-start:hover::before { transform: translateX(100%); }
+.btn-start:hover { box-shadow: 0 0 0 1px var(--gold-l), 0 0 40px rgba(212,160,23,.8); transform: translateY(-2px); }
+
+/* ══════════════════════════════════════════════════
+   GAME SCREEN
+══════════════════════════════════════════════════ */
+#screen-game {
+    display: none; flex-direction: column; align-items: center;
+    padding: 30px 16px 60px; gap: 26px; min-height: calc(100vh - 70px);
+}
+
+/* Scroll/papyrus panel */
+.scroll-panel {
+    position: relative; background: rgba(26,18,8,.85);
+    border: 1px solid var(--gold-d); border-radius: 4px;
+    padding: 22px 30px; width: 100%; max-width: 700px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.7);
+}
+.scroll-panel::before {
+    content: '';
+    position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
+    border: 1px solid rgba(212,160,23,.15); border-radius: 2px; pointer-events: none;
+}
+
+/* Round indicator */
+.round-badge {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 11px; color: var(--sand-d); letter-spacing: 3px; text-transform: uppercase;
+    padding-bottom: 14px; border-bottom: 1px solid rgba(212,160,23,.15); margin-bottom: 20px;
+}
+.round-badge .glyph-row { font-size: 18px; color: var(--gold-d); opacity: .5; letter-spacing: 6px; }
+
+/* ─── Stone tiles (scramble) ─── */
+#scramble-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    min-height: 80px;
+    width: 100%;
+    overflow-x: visible;
+    padding-bottom: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.scramble-tile {
+    position: relative; width: 60px; height: 70px;
+    background: linear-gradient(160deg, #2C2010 0%, #1A1208 60%, #0D0A05 100%);
+    border: 1px solid var(--gold-d); border-radius: 3px;
+    display: grid; place-items: center;
+    font-family: 'Cinzel Decorative', cursive; font-size: 26px; font-weight: 700;
+    color: #FFE9A6; cursor: pointer; user-select: none; line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,.8), 0 0 12px rgba(212,160,23,.9);
+    box-shadow: 0 4px 16px rgba(0,0,0,.6), inset 0 1px 0 rgba(212,160,23,.2);
+    transition: box-shadow .15s;
+    overflow: hidden;
+    line-height: 70px;
+    font-kerning: none;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "kern" 0;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+.scramble-tile::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(212,160,23,.08) 0%, transparent 50%);
+}
+.scramble-tile::after {
+    content: attr(data-glyph);
+    position: absolute; bottom: 2px; right: 3px;
+    font-size: 10px; color: var(--gold-d); opacity: .5; font-family: serif;
+}
+.scramble-tile:hover  { box-shadow: 0 12px 30px rgba(0,0,0,.8), var(--glow); }
+.scramble-tile:active { transform: scale(.94); }
+.scramble-tile.used {
+    background: #0D0A05; border-color: rgba(212,160,23,.15);
+    color: rgba(212,160,23,.2); cursor: default;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,.6);
+}
+
+/* ─── Answer sarcophagi ─── */
+#answer-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 8px 0;
+    min-height: 80px;
+    width: 100%;
+    overflow-x: visible;
+    padding-bottom: 6px;
+    position: relative;
+    z-index: 999;
+}
+
+.answer-box {
+    width: 60px; height: 70px;
+    background: rgba(26,18,8,.7);
+    border: 1px dashed rgba(212,160,23,.3); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel Decorative', cursive; font-size: 26px; font-weight: 700;
+    color: var(--gold-l); cursor: pointer; user-select: none; line-height: 1;
+    text-shadow: 0 1px 2px rgba(0,0,0,.8), 0 0 16px rgba(212,160,23,.9);
+    opacity: 1 !important;
+    transition: transform .2s, border-color .2s, background-color .2s, box-shadow .2s; position: relative;
+    z-index: 1000;
+}
+.answer-box.filled {
+    background: var(--hieroglyph);
+    border-style: solid;
+    border-color: var(--gold-l);
+    opacity: 1 !important;
+    cursor: default;
+}
+.answer-box:not(:empty):hover {
+    border-color: var(--gold); background: rgba(212,160,23,.08);
+    transform: translateY(-3px);
+}
+.answer-box.correct {
+    background: rgba(42,140,126,.2); border-color: var(--turquoise); border-style: solid;
+    color: #7FFFD4; animation: sacrophCorrect .5s ease;
+    box-shadow: 0 0 20px rgba(42,140,126,.4);
+}
+.answer-box.wrong {
+    background: rgba(139,26,26,.3); border-color: var(--blood); border-style: solid;
+    color: #FF8080; animation: sacrophWrong .5s ease;
+    box-shadow: 0 0 20px rgba(139,26,26,.5);
+}
+
+@keyframes sacrophCorrect {
+    0%   { transform: scale(1) }
+    40%  { transform: scale(1.15) rotate(2deg) }
+    100% { transform: scale(1) }
+}
+@keyframes sacrophWrong {
+    0%,100% { transform: translateX(0) }
+    20%     { transform: translateX(-8px) rotate(-2deg) }
+    60%     { transform: translateX(8px) rotate(2deg) }
+}
+
+/* ─── Separator label ─── */
+.area-label {
+    font-size: 9px; letter-spacing: 4px; color: var(--gold-d); text-transform: uppercase;
+    text-align: center; display: flex; align-items: center; gap: 12px; width: 100%;
+}
+.area-label::before, .area-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,160,23,.3), transparent);
+}
+
+/* ─── Warning panel ─── */
+#warning-panel {
+    width: 100%; max-width: 700px;
+    min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px;
+}
+
+#wrath-meter {
+    display: flex; gap: 6px; align-items: center; justify-content: center;
+}
+.wrath-skull { font-size: 20px; opacity: .25; transition: all .3s; }
+.wrath-skull.active { opacity: 1; animation: skullPulse .8s ease infinite alternate; }
+@keyframes skullPulse { from{transform:scale(1)} to{transform:scale(1.2)} }
+
+#oracle-msg {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: 16px; text-align: center; min-height: 26px;
+    line-height: 1.5; transition: opacity .3s;
+}
+#oracle-msg.good    { color: var(--turquoise); }
+#oracle-msg.warning { color: var(--gold); }
+#oracle-msg.wrath   { color: #FF6B6B; text-shadow: 0 0 20px rgba(255,107,107,.6); }
+#oracle-msg.doom    { color: #FF2222; text-shadow: 0 0 30px rgba(255,34,34,.8); animation: doomFlicker .3s ease infinite alternate; }
+@keyframes doomFlicker { from{opacity:1} to{opacity:.7} }
+
+#hint-reveal {
+    font-family: 'Cinzel', serif; font-size: 16px; font-weight: 600;
+    letter-spacing: 6px; color: var(--turquoise); text-align: center; min-height: 22px;
+    text-shadow: 0 0 15px rgba(42,140,126,.5);
+}
+
+/* ─── Controls ─── */
+.game-controls { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+.ctrl-btn {
+    font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 2px; padding: 10px 26px; cursor: pointer; transition: all .2s; border: 1px solid;
+}
+.ctrl-btn.hint-btn {
+    background: transparent; color: var(--gold); border-color: var(--gold-d);
+}
+.ctrl-btn.hint-btn:hover { background: rgba(212,160,23,.1); box-shadow: var(--glow); }
+.ctrl-btn.skip-btn {
+    background: transparent; color: var(--sand-d); border-color: rgba(255,255,255,.15);
+}
+.ctrl-btn.skip-btn:hover { background: rgba(255,255,255,.05); }
+
+/* ─── Screen transition fog ─── */
+#screen-fog {
+    display: none;
+}
+
+/* ══════════════════════════════════════════════════
+   RESULT OVERLAY
+══════════════════════════════════════════════════ */
+#result-overlay {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(13,10,5,.96); backdrop-filter: blur(10px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; text-align: center; padding: 30px;
+}
+#result-overlay.show { display: flex; }
+
+.result-cartouche {
+    width: 90px; height: 90px; font-size: 56px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--gold); border-radius: 50%;
+    box-shadow: var(--glow);
+    animation: cartouche 1s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes cartouche { from{transform:scale(0) rotate(-180deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+
+.result-title {
+    font-family: 'Cinzel Decorative', cursive; font-size: clamp(24px, 5vw, 44px);
+    color: var(--gold-l); text-shadow: var(--glow); letter-spacing: 2px;
+}
+.result-score {
+    font-family: 'Cinzel Decorative', cursive; font-size: 28px; color: var(--sand);
+    border: 1px solid var(--gold-d); padding: 10px 30px;
+}
+.result-detail {
+    font-family: 'IM Fell English', serif; font-style: italic;
+    font-size: 14px; color: var(--sand-d); line-height: 1.8;
+    max-width: 400px;
+}
+.result-scroll {
+    font-size: 12px; letter-spacing: 3px; color: var(--gold-d); text-transform: uppercase;
+    border-top: 1px solid rgba(212,160,23,.2); padding-top: 18px; max-width: 400px;
+    font-family: 'IM Fell English', serif; font-style: italic; color: var(--sand-d);
+    line-height: 1.7;
+}
+
+.result-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+.btn-play-again {
+    font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    background: linear-gradient(135deg, var(--gold-d), var(--gold));
+    color: var(--obsidian); border: none; border-radius: 2px;
+    padding: 14px 40px; cursor: pointer;
+    box-shadow: 0 0 0 1px var(--gold-l), var(--glow); transition: all .25s;
+}
+.btn-play-again:hover { box-shadow: 0 0 0 1px var(--gold-l), 0 0 50px rgba(212,160,23,.9); transform: translateY(-2px); }
+
+.btn-menu-out {
+    font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    background: transparent; color: var(--sand-d); border: 1px solid var(--gold-d);
+    border-radius: 2px; padding: 14px 40px; cursor: pointer; transition: all .25s;
+}
+.btn-menu-out:hover { background: rgba(212,160,23,.08); color: var(--gold-l); }
+
+/* ─── Red screen vignette on wrath ─── */
+#wrath-vignette {
+    display: none;
+}
+#sand-shake { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+/* Submitting badge */
+.submitting-badge {
+    display: none; position: fixed; bottom: 20px; right: 90px;
+    background: var(--tomb); border: 1px solid var(--gold-d);
+    border-radius: 3px; padding: 10px 18px;
+    font-size: 12px; color: var(--sand-d); z-index: 400; letter-spacing: 2px;
+}
+.submitting-badge.show { display: block; }
+
+/* ─── Particles canvas ─── */
+#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+    .hiero-strip { display: none; }
+    .content { padding: 0 16px; }
+    .topbar { padding: 10px 16px; }
+    .scramble-tile, .answer-box { width: 48px; height: 58px; font-size: 20px; }
+}

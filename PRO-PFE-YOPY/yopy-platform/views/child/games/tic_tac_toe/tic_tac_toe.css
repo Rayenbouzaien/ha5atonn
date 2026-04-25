@@ -1,0 +1,367 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #e9dfce;
+            background-image: repeating-linear-gradient(45deg, rgba(130, 90, 50, 0.05) 0px, rgba(130, 90, 50, 0.05) 2px, transparent 2px, transparent 8px);
+            font-family: 'ZCOOL XiaoWei', 'Playfair Display', serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #ink-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.55;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            backdrop-filter: blur(1px);
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 32px;
+            background: rgba(235, 222, 198, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid #b87c4f;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 30;
+        }
+
+        .logo {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+            color: #5a3a28;
+            letter-spacing: 4px;
+        }
+
+        .score-set {
+            display: flex;
+            gap: 28px;
+            background: rgba(170, 135, 85, 0.2);
+            padding: 5px 28px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #c7a56b;
+        }
+
+        .score-block {
+            text-align: center;
+            position: relative;
+        }
+
+        .score-label {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 14px;
+            color: #a62c2b;
+            background: rgba(166, 44, 43, 0.1);
+            padding: 2px 8px;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 4px;
+            letter-spacing: 2px;
+        }
+
+        .score-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3f2a1a;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .buddy {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #efe3cf;
+            padding: 5px 20px 5px 12px;
+            border-radius: 60px;
+            border: 1px solid #cfa468;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            background: #dbbc8c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 1px solid #a56f3a;
+        }
+
+        .menu-ink {
+            background: none;
+            border: 1.5px solid #8b5a2b;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-family: 'ZCOOL XiaoWei', serif;
+            color: #5a3a28;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu-ink:hover { background: #c8aa7a; transform: scale(0.96); }
+
+        .diff-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 85px);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .ink-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 80px;
+            color: #5d3a1f;
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
+        }
+
+        .ink-sub {
+            font-size: 18px;
+            color: #7a583a;
+            border-bottom: 1px dashed #c0a16b;
+            display: inline-block;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 30px 0 50px;
+        }
+
+        .card {
+            background: rgba(248, 239, 216, 0.8);
+            backdrop-filter: blur(6px);
+            border-radius: 48px;
+            padding: 28px 24px;
+            width: 210px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #cfaa72;
+        }
+
+        .card.selected {
+            background: #f3e5cf;
+            border: 2px solid #b2582c;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 28px rgba(0,0,0,0.2);
+        }
+
+        .diff-icon { font-size: 48px; }
+        .diff-name { font-size: 28px; font-weight: 700; color: #6d3f1c; font-family: 'Ma Shan Zheng', cursive; }
+        .diff-points { background: #b77d48; color: #fff1df; border-radius: 30px; font-size: 12px; padding: 4px 12px; margin-top: 12px; display: inline-block; }
+
+        .start-btn {
+            background: transparent;
+            border: 2px solid #5a3a28;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 28px;
+            padding: 12px 56px;
+            border-radius: 60px;
+            color: #5a3a28;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            background: #5a3a28;
+            color: #fef3df;
+        }
+
+        .game-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px 50px;
+        }
+
+        .round-badge {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 18px;
+            background: rgba(185, 145, 85, 0.4);
+            padding: 6px 24px;
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            margin-bottom: 8px;
+        }
+
+        .turn-text {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: #875d34;
+            margin: 12px 0;
+        }
+
+        .board-wrapper {
+            position: relative;
+            width: min(500px, 85vw);
+            height: min(500px, 85vw);
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.05);
+        }
+
+        .board-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .board-svg line, .board-svg rect {
+            stroke: #000000;
+            stroke-linecap: round;
+            fill: none !important;
+        }
+
+        .board-svg line {
+            stroke-width: 6;
+        }
+
+        .board-svg rect {
+            stroke-width: 6;
+        }
+
+        .win-line-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .grid-cells {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            z-index: 2;
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            background: transparent;
+        }
+
+        .cell.taken { cursor: default; }
+
+        .cell svg {
+            width: 60%;
+            height: 60%;
+            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+        }
+
+        .win-glow-x { background: radial-gradient(circle, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 80%); }
+        .win-glow-o { background: radial-gradient(circle, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.02) 80%); }
+
+        .control-group {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .ink-btn {
+            background: transparent;
+            border: 2px solid #5a3a28;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 20px;
+            padding: 8px 36px;
+            border-radius: 48px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #5a3a28;
+        }
+
+        .ink-btn:hover {
+            background: #5a3a28;
+            color: #fef3df;
+        }
+
+        .result-overlay, .round-result-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 22, 14, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-card {
+            background: #fef7ea;
+            border-radius: 48px;
+            padding: 36px 48px;
+            text-align: center;
+            border: 2px solid #c28f56;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+            font-family: 'ZCOOL XiaoWei', serif;
+        }
+
+        .result-emoji { font-size: 70px; }
+        .result-title { font-size: 42px; font-weight: 800; color: #794d28; font-family: 'Ma Shan Zheng', cursive; }
+        .submitting {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2c241c;
+            color: #efdfbf;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 13px;
+            display: none;
+            z-index: 300;
+        }
+
+        @keyframes fadeRise {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-enter { animation: fadeRise 0.5s ease-out; }
